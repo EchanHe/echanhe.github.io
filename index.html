@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Story Teller</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"> 
+  <style>
+    .bgTextBox {
+      background-color: rgb(241, 241, 241);
+      padding: 10px;
+    }
+
+    .bgDemo {
+      border-style: solid;
+      border-width: 0.5px;
+      padding: 10px;
+    }
+
+    .highlight pre {
+      white-space: pre-wrap;
+    }
+
+    .nav-item {
+      cursor: pointer;
+    }
+
+    .alien {
+      font-family: 'Architects Daughter', cursive;
+    }
+
+
+    div#main_panel {
+      float: right;
+      width: 70%;
+    }
+
+    div#char_panel {
+    
+      width: 100%;
+    }
+
+    div#bg_panel {
+   
+      width: 100%;
+    }
+
+    div#side_panel {
+      float: left;
+      width: 29.9%;
+    }
+
+    #overlay {
+      position: fixed;
+      display: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    div#face_choicer{
+      position:relative;
+      width: 50%;
+      height: 50%;
+      left: 25%;
+      top: 25%;
+      border: 3px solid #73AD21;
+    }
+    div#face_choicer_body{
+      position:relative;
+      /* width: 20%; */
+      height: 80%;
+      /* left: 40%; */
+      /* top: 0%; */
+      border: 3px solid #1b18e7;
+    }
+
+
+    div#face_choicer_footer{
+      position:relative;
+      float:bottom;
+      width: 100%;
+      height: 10%;
+      /* left: 40%; */
+      top: 0%;
+      border: 3px solid #e71818;
+    }
+
+    .comic_class{
+      height: 100px;
+      width: 100px;
+      background-color: powderblue;
+      position:relative; 
+
+    }
+
+    .choice_img{
+      height: 100px;
+      width: 100px;
+    }
+
+    .char_menu{
+      height: 100px;
+      width: 500px;
+      background-color: rgb(87, 46, 134);
+      position:relative; 
+
+    }
+
+    .bg_menu{
+      height: 100px;
+      width: 500px;
+      background-color: rgb(0, 37, 245);
+      position:relative; 
+    }
+    .bg_button{
+      max-width: 20%;
+      max-height: 20%;
+      height: 100%;
+      width: 100%;
+      background-color: rgb(74, 161, 47);
+    }
+    .char_button{
+      max-width: 20%;
+      max-height: 20%;
+      height: 100%;
+      width: 100%;
+      background-color: rgb(74, 161, 47);
+    }
+
+  </style>
+</head>
+
+<body>
+  
+  Overlay for choosing the face
+  <div id="overlay">
+
+    <div id="face_choicer">
+      <div id="face_choicer_body">
+
+
+      </div>
+
+      <div id="face_choicer_footer">
+        <button onclick="move_eye(false)" style="position: relative; top:0%;left:0%;">
+          Prev eye
+        </button>
+        
+        <button onclick="move_eye(true)" style="position: relative; float: right; top:0%;left:0%;">
+          next eye
+        </button>
+
+        <button onclick="move_mouth(false)" style="position: relative; top:0%;left:20%;">
+          prev_mouth
+        </button>
+        
+        <button onclick="move_mouth(true)" style="position: relative; float: right; top:0%;left:20%;">
+          next_mouth
+        </button>
+
+        <button onclick="open_comic()" style="position: relative;  top:-100%;">
+          OK
+        </button>
+    
+        <button onclick="overlay_off()" style="position: relative; top:-100%;">
+          back
+        </button>
+
+      </div>
+      
+
+      <!-- <div id="face"> -->
+
+      <!-- </div> -->
+
+
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-md bgTextBox navbar-light alien">
+      <!-- Brand -->
+      <a class="navbar-brand alien" href="index.html"><img src="img/icon.png" alt="logo" style="width:40px;"> Story Teller
+      </a>
+  
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index2.html">Story</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="code.html">code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">about</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+
+
+  <!-- <button onclick="add_img()">Add character</button>
+  <button onclick="add_bg()">Add bg</button> -->
+
+  <div id="main_panel">
+
+    <!-- <div id = "char_panel">
+      <label>
+        <input type="radio" name="char_info" value="img/character.png" checked>
+        <img src="img/character.png" class="choice_img">
+      </label>
+    
+      <label>
+        <input type="radio" name="char_info" value="img/character_2.png" unchecked>
+        <img src="img/character_2.png" class="choice_img">
+      </label>
+    </div> -->
+
+    <!-- <div id = "bg_panel">
+      <label>
+        <input type="radio" name="bg_info" value="img/bg.png" checked>
+        <img src="img/bg.png" class="choice_img">
+      </label>
+    
+      <label>
+        <input type="radio" name="bg_info" value="img/bg2.png" unchecked>
+        <img src="img/bg2.png" class="choice_img">
+      </label>
+    </div> -->
+
+    <br>
+    <button onclick="overlay_on()" >
+      make comic
+    </button>
+
+  </div>
+
+
+  <div id = "side_panel">
+    <p>This it the intro of this website</p>
+  </div>
+
+
+  <!-- <div id="comic" , class="comic_class"  ></div> -->
+
+  <!-- <div id="char_menu" , class="char_menu"  >
+    <button class="char_button">1</button>
+    <button class="char_button">2</button>
+    <button class="char_button">3</button>
+  </div>
+
+  <div id="bg_menu" , class="bg_menu"  >
+    <button id="bg_1" class="bg_button">1</button>
+    <button id="bg_2" class="bg_button">2</button>
+    <button id="bg_3" class="bg_button">3</button>
+  </div> -->
+
+  <!-- <div class="popup" onclick="myFunction()">Click me to toggle the popup!
+    <span class="popuptext" id="myPopup">A Simple Popup!</span>
+  </div>
+
+  <button onclick="add_bg()">choose expression</button> -->
+
+
+
+
+  <!-- <div id="comic" , class="comic_class"  ></div> -->
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/config.js"></script>
+  <script>
+    function overlay_on() {
+      //add overlay and upate face
+      document.getElementById("overlay").style.display = "block";
+      
+      var targetelement= document.getElementById("face_choicer_body")
+      targetelement.innerHTML = "";
+
+
+      char_key = get_choice(document.getElementsByName('char_info'))
+
+      var filename = config['characters'][char_key]['face']['filename'];
+      //[{filename,... offset} , {filename,... offset}]
+      l_eye = config['characters'][char_key]['eyes'];
+      //[{filename,... offset} , {filename,... offset}]
+      l_mouth = config['characters'][char_key]['mouth'];
+
+      // //get the eye list from config file
+      // l_eye = ['img/e1.png' , 'img/e2.png', 'img/e3.png'];
+      // l_mouth = ['img/m1.png' , 'img/m2.png', 'img/m3.png'];
+      //get the face from the radio button
+      build_expression(filename, config['folder']);
+      
+      // add_eye(l_eye, eye_x_offset = 160, eye_y_offset=160);
+      // add_mouth(l_mouth = l_mouth, m_x_offset = 245, m_y_offset = 275);
+
+    }
+    
+    function overlay_off() {
+      document.getElementById("overlay").style.display = "none";
+    }
+
+
+    function get_choice(ele){
+      for(i = 0; i < ele.length; i++) {
+          if(ele[i].checked){
+              return ele[i].value;
+          }
+
+    }
+    window.location.href = 'comic.html';
+    
+            
+}
+
+    window.onload = function () { 
+
+    loadpage_home();
+
+    }
+
+    </script>
+
+</body>
+
+</html>
