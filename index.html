@@ -58,6 +58,7 @@
 
     #overlay {
       position: fixed;
+      /* position: relative; */
       display: none;
       width: 100%;
       height: 100%;
@@ -72,29 +73,54 @@
 
     div#face_choicer{
       position:relative;
-      width: 50%;
+      /* max-width: 400px; */
+      width: 30%;
       height: 50%;
+      /* padding-top: 30%; */
+
       left: 25%;
       top: 25%;
       border: 3px solid #73AD21;
     }
     div#face_choicer_body{
       position:relative;
-      /* width: 20%; */
-      height: 80%;
+      width: 30%;
+      /* height: 50%; */
+      padding-top: 30%;
       /* left: 40%; */
       /* top: 0%; */
       border: 3px solid #1b18e7;
     }
 
+    div#face_choicer_left{
+      position:absolute;
+      /* float:bottom; */
+      padding-left: 10%;
+      height: 20%;
+      left: 30%;
+      top: 30%;
+      border: 3px solid #2e0cf1;
+    }
+
+    div#face_choicer_right{
+      position:absolute;
+      /* float:bottom; */
+      width: 10%;
+      height: 20%;
+      left: 60%;
+      top: 30%;
+      border: 3px solid #f10ce6;
+    }
+
+
 
     div#face_choicer_footer{
-      position:relative;
-      float:bottom;
-      width: 100%;
+      position:absolute;
+      /* float:bottom; */
+      width: 20%;
       height: 10%;
-      /* left: 40%; */
-      top: 0%;
+      left: 40%;
+      top: 80%;
       border: 3px solid #e71818;
     }
 
@@ -140,21 +166,66 @@
       background-color: rgb(74, 161, 47);
     }
 
+    .face_canvas{
+      position:absolute;
+      width: 20%;
+      /* padding-top: 20%; */
+      /* position: relative; */
+      left: 40%;
+      top: 30%;
+      background-color: rgb(74, 161, 47);
+      /* display: none; */
+
+    }
+
   </style>
 </head>
 
 <body>
-  
+
   Overlay for choosing the face
+  
   <div id="overlay">
+    <!-- <div id="face_choicer_body">   -->
+      
+    <canvas id="face_canvas" class="face_canvas" width="300px" height="300px"></canvas>
+    <div id="face_choicer_right">
 
-    <div id="face_choicer">
-      <div id="face_choicer_body">
+      <button onclick="move_eye(true)" style="position: absolute;  top:20%;left:0%;">
+        next eye
+      </button>
+
+      <button onclick="move_mouth(true)" style="position: absolute;  top:70%;left:0%;">
+        next_mouth
+      </button>
+    </div>
 
 
-      </div>
+    <div id="face_choicer_left" >
+      <button onclick="move_eye(false)" style="position: absolute; float: right;left:0%; top:20%;">
+        Prev eye
+      </button>  
+    
+      <button onclick="move_mouth(false)" style="position: absolute; float: right;left:0%; top:70%;">
+        prev_mouth
+      </button>
 
-      <div id="face_choicer_footer">
+    </div>
+
+    <button onclick="open_comic()" style="position: relative; left:40%;  top:50%;">
+      OK
+    </button>
+
+    <button onclick="overlay_off()" style="position: relative; left:40%; top:50%;">
+      back
+    </button>
+
+    <!-- <div id="face_choicer"> -->
+    <!-- </div>  -->
+
+    
+
+      <!-- <div id="face_choicer_footer">
         <button onclick="move_eye(false)" style="position: relative; top:0%;left:0%;">
           Prev eye
         </button>
@@ -179,18 +250,9 @@
           back
         </button>
 
-      </div>
+      </div> -->
       
-
-      <!-- <div id="face"> -->
-
-      <!-- </div> -->
-
-
-
-
-
-    </div>
+    
 
 
 
@@ -222,7 +284,7 @@
           </li>
         </ul>
       </div>
-  </nav>
+    </nav>
 
 
   <!-- <button onclick="add_img()">Add character</button>
@@ -297,19 +359,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
   <script src="js/config.js"></script>
+
+
   <script>
     function overlay_on() {
       //add overlay and upate face
       document.getElementById("overlay").style.display = "block";
       
-      var targetelement= document.getElementById("face_choicer_body")
-      targetelement.innerHTML = "";
+      // document.getElementById("face_canvas").style.display = "block";
+      // var targetelement= document.getElementById("face_choicer_body")
+      // targetelement.innerHTML = "";
 
 
       char_key = get_choice(document.getElementsByName('char_info'))
 
       var filename = config['characters'][char_key]['face']['filename'];
       //[{filename,... offset} , {filename,... offset}]
+      v_character = config['characters'][char_key]; 
+
       l_eye = config['characters'][char_key]['eyes'];
       //[{filename,... offset} , {filename,... offset}]
       l_mouth = config['characters'][char_key]['mouth'];
@@ -318,7 +385,7 @@
       // l_eye = ['img/e1.png' , 'img/e2.png', 'img/e3.png'];
       // l_mouth = ['img/m1.png' , 'img/m2.png', 'img/m3.png'];
       //get the face from the radio button
-      build_expression(filename, config['folder']);
+      build_expression(filename);
       
       // add_eye(l_eye, eye_x_offset = 160, eye_y_offset=160);
       // add_mouth(l_mouth = l_mouth, m_x_offset = 245, m_y_offset = 275);
@@ -327,6 +394,7 @@
     
     function overlay_off() {
       document.getElementById("overlay").style.display = "none";
+      // document.getElementById("face_canvas").style.display = "none";
     }
 
 
