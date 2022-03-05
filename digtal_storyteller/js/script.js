@@ -1,129 +1,8 @@
 
+var id_eye = 0;
+var id_mouth = 0;
+var bool_draw_face
 
-function add_img() {
-    var src = "img/character.png";
-    // show_image(src, 276,110, "Google Logo");
-
-    var img = document.createElement("img");
-    var targetelement= document.getElementById("comic")
-    img.src = src;
-    img.width = 200;
-    img.height = 200;
-
-    img.style.position = "absolute"
-    img.style.left = 200+'px';
-    img.style.top = 200+'px'; 
-
-    img.alt = "bg";
-    targetelement.appendChild(img);
-}
-
-function add_bg(){
-    var src = "img/bg.png";
-    // show_image(src, 276,110, "Google Logo");
-
-    var img = document.createElement("img");
-    var targetelement= document.getElementById("comic")
-    img.src = src;
-    img.width = 400;
-    img.height = 400;
-
-    img.style.position = "absolute"
-    img.style.left = 0+'px';
-    img.style.top = 0+'px'; 
-    img.alt = "bg";
-    targetelement.appendChild(img);
-
-}
-
-function show_image(src, width, height, alt) {
-    var img = document.createElement("img");
-    var targetelement= document.getElementById("comic")
-    img.src = src;
-    img.width = width;
-    img.height = height;
-    img.alt = alt;
-    targetelement.appendChild(img);
-}
-
-function myFunction() {
-    var popup = document.getElementById("exp_popup");
-    popup.classList.toggle("show");
-  }
-
-
-
-
-
-
-// window.addEventListener("load", function(){
-//     console.log("istener")
-//     console.log(bg_name);
-// });
-
-function add_bg_with_name(src){
-    // show_image(src, 276,110, "Google Logo");
-
-    var img = document.createElement("img");
-    var targetelement= document.getElementById("comic");
-    img.src = src;
-    img.width = 400;
-    img.height = 400;
-
-    img.style.position = "absolute"
-    img.style.left = 0+'px';
-    img.style.top = 0+'px'; 
-    img.alt = "bg";
-    targetelement.appendChild(img);
-
-}
-
-
-function write_text(){
-    // var text = document.getElementById("text").value;
-    // var y = document.createTextNode(text);
-
-    // var targetelement= document.getElementById("comic");
-    // targetelement.appendChild(y);
-
-
-
-
-
-
-
-    
-    addTextToImage("img/bg2.png", text)
-}
-
-// var e = document.getElementById('addtext')
-// e.addEventListener('click', addTextToImage("img/bg2.png"))
-
-function addTextToImage(imagePath) {
-    console.log("add text");
-    var text ="asdasd";
-    var circle_canvas = document.getElementById("canvas");
-    var context = circle_canvas.getContext("2d");
-
-    // Draw Image function
-
-
-
-
-
-    // img.onload = function () {
-
-    // };
-
-    // document.getElementById("addtext").addEventListener("click", function(){console.log("clicked");}, false);
-}
-// const form = document.getElementById('text_form');
-// const log = document.getElementById('log');
-// form.addEventListener('submit', console.log(document.getElementById('enter_text').value));
-
-// addTextToImage("img/bg2.png", "Your text");
-
-//function in the index.html
 
 function loadpage_home(){
     // config = JSON.parse("config2.json");
@@ -166,96 +45,24 @@ function loadpage_home(){
         
 
             // console.log(characters["1"])
-            label.innerHTML = "<input type=\"radio\" name=" + label_name+ " value=" + key +
-            " checked> <img src=" + folder + filename + " class=\"choice_img\">";
-            
+            if(i==0){
+                label.innerHTML = "<input type=\"radio\" name=" + label_name+ " value=" + key +
+                " checked> <img src=" + folder + filename + " name=" + label_name+ " value=" + key + 
+                " class=\"choice_img\"  onclick=select_char_or_bg(this) style=\"padding:0px 5px;\">";
+            }else{
+                label.innerHTML = "<input type=\"radio\" name=" + label_name+ " value=" + key +
+                " unchecked> <img src=" + folder + filename + " name=" + label_name+ " value=" + key + 
+                " class=\"choice_img\"  onclick=select_char_or_bg(this) style=\"padding:0px 5px;\">";
+            }
+
             div.appendChild(label);
         }
         
         targetelement.appendChild(div);
-
     }
 
-
-    // window.addEventListener('resize', function(event) {
-    //     var circle_canvas = document.getElementById("face_canvas");
-    //     var context = circle_canvas.getContext("2d");
-    //     console.log("window resized: canvas size: " + circle_canvas.height +"  "+ circle_canvas.width )
-    //     circle_canvas.height  = circle_canvas.width;
-
-    //     console.log("window resized: canvas size: " + circle_canvas.height +"  "+ circle_canvas.width )
-    // }, true);
-
+    select_char_or_bg('init');
 }
-
-var id_eye = 0;
-var id_mouth = 0;
-var bool_draw_face
-// function add_face(filename , l_eye, eye_x_offset, eye_y_offset,
-//     l_mouth, m_x_offset, m_y_offset ){
-
-//     // show_image(src, 276,110, "Google Logo");
-
-//     var targetelement= document.getElementById("face_choicer_body");
-
-//     var img = document.createElement("img");
-//     img.src = filename;
-
-//     // eyes
-//     var eye = document.createElement("img");
-//     eye.src = l_eye[0];
-
-//     id_eye = 0;
-    
-//     //mouths
-//     var mouth = document.createElement("img");
-//     mouth.src = l_mouth[0];
- 
-//     id_mouth = 0;
-
-//     load_img_cnt=0;
-
-//     var onImgLoad = function()
-//     {
-//         load_img_cnt++;
-//         if(load_img_cnt == 3){
-//             draw_face();
-//             draw_parts(targetelement , eye, ratio, eye_x_offset , eye_y_offset,"img_eye");
-//             draw_parts(targetelement , mouth, ratio, m_x_offset , m_y_offset, "img_mouth");
-//         }
-
-//     };
-
-//     img.onload = onImgLoad;
-//     eye.onload = onImgLoad;
-//     mouth.onload = onImgLoad;
-
-//     function draw_face(){
-//         ratio = calculateAspectRatio(img.width,img.height,targetelement.offsetWidth,targetelement.offsetHeight);
-//         console.log(ratio)
-
-//         img.width = img.width * ratio;
-//         img.height = img.height * ratio;
-    
-  
-//         //relative image size
-//         // img.style.maxHeight = "100%";
-//         // img.style.maxWidth = "100%";
-
-
-//         // eye.width = eye.width * ratio;
-//         // eye.height = eye.height * ratio;
-
-//         // eye.id = "img_eye";
-        
-//         // eye.style.position = "absolute"
-//         // eye.style.left = x_offset * ratio+'px';
-//         // eye.style.top = y_offset * ratio+'px'; 
-
-//         targetelement.appendChild(img);
-//     };
-    
-// }
 
 function build_expression(filename){
 
@@ -342,34 +149,7 @@ function draw_face_canvas(){
 
 };
 
-// function add_eye(){
-//     var targetelement= document.getElementById("face_choicer_body")
-//     var eye = document.createElement("img");
-//     eye.src = l_eye[0];
-//     global_l_eye = l_eye;
-//     id_eye = 0;
 
-//     eye.onload = function () {
-//         if(bool_draw_face==true)
-//             draw_parts(targetelement , eye, ratio, eye_x_offset , eye_y_offset)
-
-//     };
-
-// };
-
-// function add_mouth(){
-//     var targetelement= document.getElementById("face_choicer_body")
-//     var mouth = document.createElement("img");
-//     mouth.src = l_mouth[0];
-//     global_l_mouth = l_mouth;
-//     id_mouth = 0;
-
-//     mouth.onload = function () {
-//         if(bool_draw_face==true)
-//             draw_parts(targetelement , mouth, ratio, m_x_offset , m_y_offset)
-
-//     };
-// };
 
 function move_eye(next){
     //remove previous eyes
@@ -494,18 +274,18 @@ function draw_parts(targetelement, img, ratio, x_offset,y_offset, id_name  ){
 
 
 
-function open_comic(){
-    var ele = document.getElementsByName('bg_info');
-    localStorage.setItem("bg_key", get_choice(ele));
+// function open_comic(){
+//     var ele = document.getElementsByName('bg_info');
+//     localStorage.setItem("bg_key", get_choice(ele));
 
-    var ele = document.getElementsByName('char_info');
-    localStorage.setItem("char_key", get_choice(ele));
+//     var ele = document.getElementsByName('char_info');
+//     localStorage.setItem("char_key", get_choice(ele));
 
-    localStorage.setItem("id_eye", id_eye);
-    localStorage.setItem("id_mouth", id_mouth);
-    window.location.href = 'comic.html';
+//     localStorage.setItem("id_eye", id_eye);
+//     localStorage.setItem("id_mouth", id_mouth);
+//     window.location.href = 'comic.html';
     
-}
+// }
 
 //-------------Functions for drawing comic-------------.
 
@@ -579,161 +359,84 @@ function add_bg_char_to_canvas(){
 
 
 
-function go() {
-    // Draw Image function
-    text= document.getElementById('area1').value
-    
-    n_char = text.length;
-    if(n_char>0 & n_char<20){
-        bubble_key='small';
-    }else if (n_char<102){
-        bubble_key='medium';
-    }else if (n_char<175){
-        bubble_key='large';
-    }else{
-        bubble_key='long';
-    }
-
-
-    // bubble_key = bubble_keys[bubble_id];
-    var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
-    dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
-
-
-    dialog.onload =img_onload;
-
-    function img_onload(){
-
-        draw_character("canvas" ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key);
-
-    };
-}
-
-function draw_character(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog ,bubble_key){
-    console.log("==== Drawing Comic ====");
-    var circle_canvas = document.getElementById(canvas_id);
-    var context = circle_canvas.getContext("2d");
-
-    //update the canvas as the background's width and heighy
-    context.canvas.width  = bg.width;
-    context.canvas.height = bg.height;
-
-    console.log("Canvas figure size: "+context.canvas.width +" x " + context.canvas.height);
-    context.clearRect(0, 0,context.canvas.width, context.canvas.height);
-
-
-    console.log("Background figure size: "+context.canvas.width +" x " + context.canvas.height);
-    context.drawImage(bg, 0, 0 , context.canvas.width, context.canvas.height);
-
-
-    x_char=config['characters'][char_key]['figure']['x_offset_from_bg'];
-    y_char=config['characters'][char_key]['figure']['y_offset_from_bg'];
-
-    var width_char = config['characters'][char_key]['figure']['width'];
-    var height_char = config['characters'][char_key]['figure']['height'];
-
-
-    console.log("character figure size: "+char.width +" x " + char.height);
-    console.log("character figure  x: "+x_char +", y: " + y_char);
-    context.drawImage(char, x_char, y_char,width=width_char, height=height_char);
-
-    
-    x_eye = x_char;
-    y_eye = y_char;
-
-
-    x_mouth = x_char;
-    y_mouth = y_char;
-
-    console.log("eye size: "+eye.width +" x " + eye.height);
-    console.log("mouth size: "+mouth.width +" x " + mouth.height);
-
-    context.drawImage(eye, x_eye, y_eye,width=width_char, height=height_char);
-    context.drawImage(mouth, x_mouth, y_mouth,width=width_char, height=height_char);
-
-
-    //Draw and dialog text
-    if(text !=''){
-        font = 34;
-        console.log("Use speech bubble:" +bubble_key );
-        var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
-        var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
-    
-        var bubble_width = config['speech_bubbles'][bubble_key]['width'];
-        var bubble_height = config['speech_bubbles'][bubble_key]['height'];
-        context.drawImage(dialog, bubble_x_offset, bubble_y_offset, width = bubble_width, height = bubble_height);
-        
-
-
-        // bubble_type='medium';
-        if(bubble_key=='large'){
-            n_char_per_line = 25;
-        }else if(bubble_key=='medium'){
-            n_char_per_line = 17;
-        }else if(bubble_key=='long'){
-            n_char_per_line = 60;
-        }else if(bubble_key=='small'){
-            n_char_per_line = 10;
-        }
-
-        
-        text_array =  foldRgx(text, n_char_per_line);
-        // new_text = text_array.join('\n');
-
-        console.log("displaying text with font size: " + font)
-        console.log("Characters per line: " + n_char_per_line)
-        console.log("Lines: " + text_array.length)
-
-        // x_dia = x_char 
-        // y_dia = y_char 
-
-        x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
-        y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
-        
-        // dia_width =  font * 0.5  * n_char_per_line;
-        // dia_height=40* (text_array.length-1);
-        // context.drawImage(dialog, x_dia, y_dia, dw =dia_width, dh =dia_height);
-        // context.lineWidth = 1;
-        // context.fillStyle = "#CC00FF";
-        // context.lineStyle = "#ffff00";
-        
-        context.font = font+"px sans-serif";
-
-        lineheight=font+ 1;
-        for (var i = 0; i<text_array.length; i++){
-            context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
-        }
-    }
-}
 
 
 
-var comic_limit=2;
+
+
+
+// var comic_limit=2;
 var comic_config=[];
 var current_mini_canvas = -1;
 var bubble_key='None';
 function add_to_gallery(){
     // var circle_canvas = document.getElementById("mini_canvas_1");
+    var canvas = document.createElement('canvas');
+    
+    var mini_canvas_idx = comic_config.length+1;
+    canvas.id = "mini_canvas_" + mini_canvas_idx;
+    canvas.className = 'mini_canvas';
 
-    if (comic_config.length ==comic_limit){
-        alert("No more comic can be added");
+    canvas.style.backgroundColor =  "rgb(215, 214, 218)";
+    // canvas.style.padding = "35px";
+    canvas.style.margin= "5px";
+    var div = document.getElementById('gallery');
+    div.appendChild(canvas)
+
+    // if (comic_config.length ==comic_limit){
+        // alert("No more comic can be added");
     // Check if there is a dialog
-    }else if(text ==''){
+    // }else 
+    if(text ==''){
         alert("add dialog first");
     }else {
         
         comic_config.push({"text":text, "bg":bg })
-        draw_character("mini_canvas_"+comic_config.length ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key)
+        draw_character(canvas.id ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key)
         
         // Redraw the main canvas and reset the dialog
-        document.getElementById('area1').value ='';
-        text='';
+        clean_textarea();
         draw_character("canvas",bg, char,eye,mouth, char_key)
     }
-
-    
-
+    canvas.style.width="20%";
+    canvas.style.height="20%";
 }
+
+// select and highlight canvas
+var hilightElement = function(e) {
+    var event = e || window.event;
+
+    // this is the element you want:
+    var target = e.target || e.srcElement;
+    console.log(target.id)
+
+
+    current_mini_canvas=-1
+    var list_mini_canvas = document.getElementsByClassName("mini_canvas");
+    for (var i=0; i<list_mini_canvas.length;i++){
+        list_mini_canvas[i].style.outline = "";
+    }
+    
+    if (target.className =="mini_canvas"){
+
+        current_mini_canvas = target.id[target.id.length-1];
+        if(current_mini_canvas<=comic_config.length){
+        target.style.outline = "solid blue 5px";
+        redraw();
+        }
+        
+
+    }
+    
+    
+    };
+
+    if (document.addEventListener){
+        document.addEventListener('click', hilightElement, false);
+    } else if (document.attachEvent){
+        document.attachEvent('onclick', hilightElement);
+    }
+
 
 function redraw(){
     // var circle_canvas = document.getElementById("mini_canvas_1");
@@ -808,81 +511,148 @@ function countChar(val) {
 
 
 
-  //
-// Folds a string at a specified length, optionally attempting
-// to insert newlines after whitespace characters.
-//
-// s          -  input string
-// n          -  number of chars at which to separate lines
-// useSpaces  -  if true, attempt to insert newlines at whitespace
-// a          -  array used to build result
-//
-// Returns an array of strings that are no longer than n
-// characters long.  If a is specified as an array, the lines 
-// found in s will be pushed onto the end of a. 
-//
-// If s is huge and n is very small, this metho will have
-// problems... StackOverflow.
-//
 
-function fold(s, n, useSpaces, a) {
-    a = a || [];
-    if (s.length <= n) {
-        a.push(s);
-        return a;
+
+
+
+
+
+//------------
+
+
+
+function select_char_or_bg(ele){
+
+
+    
+    if(ele.name == "bg_info"){
+        console.log(ele.value);
+        var p =ele.parentNode;
+        var children = p.children;
+        bg_key = children[0].value;
+        char_key = get_choice(document.getElementsByName('char_info'));
+    }else if(ele.name == 'char_info'){
+        console.log(ele.value);
+        var p =ele.parentNode;
+        var children = p.children;
+        char_key = children[0].value;
+        bg_key = get_choice(document.getElementsByName('bg_info'));
+    }else if(ele == 'init'){
+        char_key = get_choice(document.getElementsByName('char_info'));
+        bg_key = get_choice(document.getElementsByName('bg_info'));
+    }else{
+        alert("error");
     }
-    var line = s.substring(0, n);
-    if (! useSpaces) { // insert newlines anywhere
-        a.push(line);
-        return fold(s.substring(n), n, useSpaces, a);
-    }
-    else { // attempt to insert newlines after whitespace
-        var lastSpaceRgx = /\s(?!.*\s)/;
-        var idx = line.search(lastSpaceRgx);
-        var nextIdx = n;
-        if (idx > 0) {
-            line = line.substring(0, idx);
-            nextIdx = idx;
+   
+
+    console.log("bg:" + bg_key + " char:" +char_key)
+
+    init_comic()
+
+    // document.getElementById("bg_info").disabled = true;  
+    // document.getElementById("char_info").disabled = true;  
+    
+    
+
+
+}
+
+
+function init_comic(){
+
+    
+    bg.onload = img_onload;
+    char.onload = img_onload;
+    eye.onload = img_onload;
+    mouth.onload = img_onload;
+    
+    // dialog.onload = img_onload;
+    imagesLoaded = 0;
+    function img_onload(){
+        imagesLoaded++;
+        if(imagesLoaded == 4){
+            draw_character("canvas" ,bg, char,eye,mouth, char_key );
+
         }
-        a.push(line);
-        return fold(s.substring(nextIdx), n, useSpaces, a);
+    };
+
+
+    //init the comic, so choose a default 
+    id_eye = 0;
+    id_mouth = 0;
+
+    
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
+
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
     }
+    var parts_folder = folder + 'figure_parts/';
+
+    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
+    char.src = folder + config['characters'][char_key]['figure']['filename'];
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+    // clean the text area
+    clean_textarea();
+}
+    
+function remove_dialog(){
+    //use the current eye mouth to draw
+    draw_character("canvas" ,bg, char,eye,mouth, char_key );
+    // clean the text area
+    clean_textarea();
+
 }
 
-// Regex version of fold function.
+function clean_textarea(){
+    document.getElementById('area1').value = '';
+    text ='';
+    var word_count = document.getElementById('charNum');
+    word_count.innerHTML = "0/240";
+}
 
-function foldRgx(s, n) {
-    var rgx = new RegExp('.{0,' + n + '}', 'g');
-    return s.match(rgx);
+// TODO edit expression based on the current face, rather than the selected face。
+function edit_expression(){
+
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
+    }
+    var parts_folder = folder + 'figure_parts/';
+
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+    eye.onload = img_onload;
+    mouth.onload = img_onload;
+    
+    // dialog.onload = img_onload;
+    imagesLoaded = 0;
+    function img_onload(){
+        imagesLoaded++;
+        if(imagesLoaded == 2){
+            draw_character("canvas" ,bg, char,eye,mouth, char_key );
+        }
+    };
+
+    overlay_off()
 }
 
 
-function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
-
-    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-
-    // return { width: srcWidth*ratio, height: srcHeight*ratio };
-    return ratio;
- }
-// download https://jsfiddle.net/user2314737/28wqq1gu/
- function download() {
-    var canvas = document.getElementById("canvas");
-    var img    = canvas.toDataURL("image/png");
-    // document.write('<img src="'+img+'"/>');
-
-    var link = document.createElement("a");
-    link.download = current_mini_canvas+'png';
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-}
-
-function draw_canvas(){
+function draw_character(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog ,bubble_key){
     console.log("==== Drawing Comic ====");
-    var circle_canvas = document.getElementById("canvas");
+    var circle_canvas = document.getElementById(canvas_id);
     var context = circle_canvas.getContext("2d");
-
-    // context.canvas.width  = window.innerWidth*0.75;
-    // context.canvas.height = window.innerHeight*0.75;
 
     //update the canvas as the background's width and heighy
     context.canvas.width  = bg.width;
@@ -912,10 +682,6 @@ function draw_canvas(){
     y_eye = y_char;
 
 
-    // x_offset_mouth = config['characters'][char_key]['mouth'][id_mouth]['x_offset_figure'];
-    // y_offset_mouth= config['characters'][char_key]['mouth'][id_mouth]['y_offset_figure'];
-
-
     x_mouth = x_char;
     y_mouth = y_char;
 
@@ -928,9 +694,7 @@ function draw_canvas(){
 
     //Draw and dialog text
     if(text !=''){
-        font = 34;
-
-
+        font = 32;
         console.log("Use speech bubble:" +bubble_key );
         var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
         var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
@@ -979,13 +743,210 @@ function draw_canvas(){
         for (var i = 0; i<text_array.length; i++){
             context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
         }
+    }
+}
 
+
+function draw_gallery(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog ,bubble_key){
+    console.log("==== Drawing Comic ====");
+    var circle_canvas = document.getElementById(canvas_id);
+    var context = circle_canvas.getContext("2d");
+
+    //update the canvas as the background's width and height
+
+    var old_bg_width = bg.width;
+    var old_bg_height = bg.height;
+
+    
+
+    bg.width = context.canvas.width ;
+    bg.height = context.canvas.height;
+
+    var ratio = calculateAspectRatio(old_bg_width,old_bg_height , bg.width ,bg.height);
+
+    console.log("Canvas figure size: "+context.canvas.width +" x " + context.canvas.height);
+    context.clearRect(0, 0,context.canvas.width, context.canvas.height);
+
+
+    console.log("Background figure size: "+context.canvas.width +" x " + context.canvas.height);
+    context.drawImage(bg, 0, 0 , context.canvas.width, context.canvas.height);
+
+
+    x_char=config['characters'][char_key]['figure']['x_offset_from_bg'] * ratio;
+    y_char=config['characters'][char_key]['figure']['y_offset_from_bg']* ratio;
+
+    var width_char = config['characters'][char_key]['figure']['width']* ratio;
+    var height_char = config['characters'][char_key]['figure']['height']* ratio;
+
+
+    console.log("character figure size: "+char.width +" x " + char.height);
+    console.log("character figure  x: "+x_char +", y: " + y_char);
+    context.drawImage(char, x_char, y_char,width=width_char, height=height_char);
+
+    
+    x_eye = x_char* ratio;
+    y_eye = y_char* ratio;
+
+
+    x_mouth = x_char* ratio;
+    y_mouth = y_char* ratio;
+
+    console.log("eye size: "+eye.width +" x " + eye.height);
+    console.log("mouth size: "+mouth.width +" x " + mouth.height);
+
+    context.drawImage(eye, x_eye, y_eye,width=width_char, height=height_char);
+    context.drawImage(mouth, x_mouth, y_mouth,width=width_char, height=height_char);
+
+
+    //Draw and dialog text
+    if(text !=''){
+        font = 34;
+        console.log("Use speech bubble:" +bubble_key );
+        var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
+        var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
+    
+        var bubble_width = config['speech_bubbles'][bubble_key]['width'];
+        var bubble_height = config['speech_bubbles'][bubble_key]['height'];
+        context.drawImage(dialog, bubble_x_offset, bubble_y_offset, width = bubble_width, height = bubble_height);
+        
+
+
+        // bubble_type='medium';
+        if(bubble_key=='large'){
+            n_char_per_line = 25;
+        }else if(bubble_key=='medium'){
+            n_char_per_line = 17;
+        }else if(bubble_key=='long'){
+            n_char_per_line = 60;
+        }else if(bubble_key=='small'){
+            n_char_per_line = 10;
+        }
+
+        
+        text_array =  foldRgx(text, n_char_per_line);
+        // new_text = text_array.join('\n');
+
+        console.log("displaying text with font size: " + font)
+        console.log("Characters per line: " + n_char_per_line)
+        console.log("Lines: " + text_array.length)
+
+        // x_dia = x_char 
+        // y_dia = y_char 
+
+        x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
+        y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
+        
+        // dia_width =  font * 0.5  * n_char_per_line;
+        // dia_height=40* (text_array.length-1);
+        // context.drawImage(dialog, x_dia, y_dia, dw =dia_width, dh =dia_height);
+        // context.lineWidth = 1;
+        // context.fillStyle = "#CC00FF";
+        // context.lineStyle = "#ffff00";
+        
+        context.font = font+"px sans-serif";
+
+        lineheight=font+ 1;
+        for (var i = 0; i<text_array.length; i++){
+            context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
+        }
+    }
+}
+
+function add_dialog() {
+    // Draw Image function
+    text= document.getElementById('area1').value
+    
+    n_char = text.length;
+    if(n_char>0 & n_char<20){
+        bubble_key='small';
+    }else if (n_char<102){
+        bubble_key='medium';
+    }else if (n_char<175){
+        bubble_key='large';
+    }else{
+        bubble_key='long';
     }
 
 
+    // bubble_key = bubble_keys[bubble_id];
+    var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
+    dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
+
+
+    dialog.onload =img_onload;
+
+    function img_onload(){
+
+        draw_character("canvas" ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key);
+
+    };
 }
 
 
 
 
-    
+//-- helper functions--
+
+
+  //
+// Folds a string at a specified length, optionally attempting
+// to insert newlines after whitespace characters.
+//
+// s          -  input string
+// n          -  number of chars at which to separate lines
+// useSpaces  -  if true, attempt to insert newlines at whitespace
+// a          -  array used to build result
+//
+// Returns an array of strings that are no longer than n
+// characters long.  If a is specified as an array, the lines 
+// found in s will be pushed onto the end of a. 
+//
+// If s is huge and n is very small, this metho will have
+// problems... StackOverflow.
+//
+function fold(s, n, useSpaces, a) {
+    a = a || [];
+    if (s.length <= n) {
+        a.push(s);
+        return a;
+    }
+    var line = s.substring(0, n);
+    if (! useSpaces) { // insert newlines anywhere
+        a.push(line);
+        return fold(s.substring(n), n, useSpaces, a);
+    }
+    else { // attempt to insert newlines after whitespace
+        var lastSpaceRgx = /\s(?!.*\s)/;
+        var idx = line.search(lastSpaceRgx);
+        var nextIdx = n;
+        if (idx > 0) {
+            line = line.substring(0, idx);
+            nextIdx = idx;
+        }
+        a.push(line);
+        return fold(s.substring(nextIdx), n, useSpaces, a);
+    }
+}
+
+// Regex version of fold function.
+
+function foldRgx(s, n) {
+    var rgx = new RegExp('.{0,' + n + '}', 'g');
+    return s.match(rgx);
+}
+
+
+function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
+
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+    // return { width: srcWidth*ratio, height: srcHeight*ratio };
+    return ratio;
+ }
+// download https://jsfiddle.net/user2314737/28wqq1gu/
+ function download() {
+    var canvas = document.getElementById("canvas");
+    // var img    = canvas.toDataURL("image/png");
+    // document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
+
+}

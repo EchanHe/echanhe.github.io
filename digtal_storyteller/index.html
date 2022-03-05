@@ -35,10 +35,28 @@
       font-family: 'Architects Daughter', cursive;
     }
 
+    /* HIDE RADIO */
+    [type=radio] { 
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* IMAGE STYLES */
+    [type=radio] + img {
+      cursor: pointer;
+    }
+
+    /* CHECKED STYLES */
+    [type=radio]:checked + img {
+      outline: 2px solid #f00;
+    }
+
 
     div#main_panel {
-      float: right;
-      width: 70%;
+
+      border: 3px solid #1826e7;
     }
 
     div#char_panel {
@@ -52,8 +70,12 @@
     }
 
     div#side_panel {
-      float: left;
-      width: 29.9%;
+      position:relative;
+      float: right;
+      width: 50%;
+      right: 0%;
+      top:20%;
+      border: 3px solid #c8e718;
     }
 
     #overlay {
@@ -124,6 +146,15 @@
       border: 3px solid #e71818;
     }
 
+    div#canvas_panel{
+      position:relative;
+      /* float:bottom; */
+      width: 50%;
+      height: 40%;
+
+      border: 3px solid #18e756;
+    }
+
     .comic_class{
       height: 100px;
       width: 100px;
@@ -173,18 +204,23 @@
       /* position: relative; */
       left: 40%;
       top: 30%;
-      background-color: rgb(74, 161, 47);
+
       /* display: none; */
 
     }
+
+    .canvas{
+      width: 80%;
+      height: 80%;
+      background-color: rgb(74, 161, 47);
+    }
+
 
   </style>
 </head>
 
 <body>
-
-  Overlay for choosing the face
-  
+ 
   <div id="overlay">
     <!-- <div id="face_choicer_body">   -->
       
@@ -212,11 +248,11 @@
 
     </div>
 
-    <button onclick="open_comic()" style="position: relative; left:40%;  top:50%;">
+    <button onclick="edit_expression()" style="position: relative; left:40%;  top:65%;">
       OK
     </button>
 
-    <button onclick="overlay_off()" style="position: relative; left:40%; top:50%;">
+    <button onclick="overlay_off()" style="position: relative; left:40%; top:65%;">
       back
     </button>
 
@@ -290,69 +326,55 @@
   <!-- <button onclick="add_img()">Add character</button>
   <button onclick="add_bg()">Add bg</button> -->
 
-  <div id="main_panel">
-
-    <!-- <div id = "char_panel">
-      <label>
-        <input type="radio" name="char_info" value="img/character.png" checked>
-        <img src="img/character.png" class="choice_img">
-      </label>
-    
-      <label>
-        <input type="radio" name="char_info" value="img/character_2.png" unchecked>
-        <img src="img/character_2.png" class="choice_img">
-      </label>
-    </div> -->
-
-    <!-- <div id = "bg_panel">
-      <label>
-        <input type="radio" name="bg_info" value="img/bg.png" checked>
-        <img src="img/bg.png" class="choice_img">
-      </label>
-    
-      <label>
-        <input type="radio" name="bg_info" value="img/bg2.png" unchecked>
-        <img src="img/bg2.png" class="choice_img">
-      </label>
-    </div> -->
-
-    <br>
-    <button onclick="overlay_on()" >
-      make comic
-    </button>
-
-  </div>
 
 
   <div id = "side_panel">
-    <p>This it the intro of this website</p>
+
+    <div id="main_panel">
+
+      <br>
+      <!-- <button onclick="init_comic()" > -->
+        Choose character and background
+      <!-- </button> -->
+  
+    </div>
+    <br>
+    <br>
+    <div id="form_panel"> 
+      <form id="form1">
+              <textarea id="area1" onkeyup="countChar(this)" maxlength="240" cols=50 rows=5 style="width: 100%; max-width: 100%;"></textarea>
+              <div id="charNum">0/240</div>
+              <br>
+              <input type="button" value="Add text" onclick="add_dialog()" />
+              <button type="button" onClick="remove_dialog()">Remove text</button>
+
+      </form>
+  </div>
+
+  
+
+  <!-- <button type="button" onClick="speech_bubble_test()">test_dialog</button> -->
+
+  
   </div>
 
 
-  <!-- <div id="comic" , class="comic_class"  ></div> -->
 
-  <!-- <div id="char_menu" , class="char_menu"  >
-    <button class="char_button">1</button>
-    <button class="char_button">2</button>
-    <button class="char_button">3</button>
+  <div id = "canvas_panel">
+    <canvas id="canvas" class="canvas" width="2300" height="2000"></canvas>
+    <button type="button" , id="edit_expression" onClick="overlay_on()">Change expression</button>
+    <button type="button" onClick="add_to_gallery()">add the comic</button>
+    <button type="button" onClick="download()">Download</button>
+    <br>
+    <br>
+    <div id="gallery">
+      <!-- <canvas id="mini_canvas_1" class="mini_canvas" width="300" height="300"></canvas> -->
+      <!-- <canvas id="mini_canvas_2" class="mini_canvas" width="300" height="300"></canvas> -->
+      
+      
+    </div>
   </div>
 
-  <div id="bg_menu" , class="bg_menu"  >
-    <button id="bg_1" class="bg_button">1</button>
-    <button id="bg_2" class="bg_button">2</button>
-    <button id="bg_3" class="bg_button">3</button>
-  </div> -->
-
-  <!-- <div class="popup" onclick="myFunction()">Click me to toggle the popup!
-    <span class="popuptext" id="myPopup">A Simple Popup!</span>
-  </div>
-
-  <button onclick="add_bg()">choose expression</button> -->
-
-
-
-
-  <!-- <div id="comic" , class="comic_class"  ></div> -->
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -386,7 +408,7 @@
       // l_mouth = ['img/m1.png' , 'img/m2.png', 'img/m3.png'];
       //get the face from the radio button
       build_expression(filename);
-      
+
       // add_eye(l_eye, eye_x_offset = 160, eye_y_offset=160);
       // add_mouth(l_mouth = l_mouth, m_x_offset = 245, m_y_offset = 275);
 
@@ -405,7 +427,7 @@
           }
 
     }
-    window.location.href = 'comic.html';
+    // window.location.href = 'comic.html';
     
             
 }
