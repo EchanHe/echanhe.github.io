@@ -949,4 +949,9 @@ function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
     // var img    = canvas.toDataURL("image/png");
     // document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
 
+    var link = document.createElement("a");
+    link.download = current_mini_canvas+'png';
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+
 }
