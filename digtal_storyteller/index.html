@@ -1,379 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <title>Story Teller</title>
-  <meta charset="utf-8">
-  <link rel="shortcut icon" href="img/icon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"> 
-  <style>
-    .bgTextBox {
-      background-color: rgb(241, 241, 241);
-      padding: 10px;
-    }
-
-    .bgDemo {
-      border-style: solid;
-      border-width: 0.5px;
-      padding: 10px;
-    }
-
-    .highlight pre {
-      white-space: pre-wrap;
-    }
-
-    .nav-item {
-      cursor: pointer;
-    }
-
-    .alien {
-      font-family: 'Architects Daughter', cursive;
-    }
-
-    /* HIDE RADIO */
-    [type=radio] { 
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    /* IMAGE STYLES */
-    [type=radio] + img {
-      cursor: pointer;
-    }
-
-    /* CHECKED STYLES */
-    [type=radio]:checked + img {
-      outline: 2px solid #f00;
-    }
+  <head>
 
 
-    div#main_panel {
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- bootstrap css -->
 
-      border: 3px solid #1826e7;
-    }
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
 
-    div#char_panel {
+
+    <!-- main css -->
+    <link rel="stylesheet" href="css/comic_all.css" />
     
-      width: 100%;
-    }
+    <!-- font-awsome css -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" />
 
-    div#bg_panel {
-   
-      width: 100%;
-    }
+    
 
-    div#side_panel {
-      position:relative;
-      float: right;
-      width: 50%;
-      right: 0%;
-      top:20%;
-      border: 3px solid #c8e718;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic">
 
-    #overlay {
-      position: fixed;
-      /* position: relative; */
-      display: none;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 2;
-      cursor: pointer;
-    }
-
-    div#face_choicer{
-      position:relative;
-      /* max-width: 400px; */
-      width: 30%;
-      height: 50%;
-      /* padding-top: 30%; */
-
-      left: 25%;
-      top: 25%;
-      border: 3px solid #73AD21;
-    }
-    div#face_choicer_body{
-      position:relative;
-      width: 30%;
-      /* height: 50%; */
-      padding-top: 30%;
-      /* left: 40%; */
-      /* top: 0%; */
-      border: 3px solid #1b18e7;
-    }
-
-    div#face_choicer_left{
-      position:absolute;
-      /* float:bottom; */
-      padding-left: 10%;
-      height: 20%;
-      left: 30%;
-      top: 30%;
-      border: 3px solid #2e0cf1;
-    }
-
-    div#face_choicer_right{
-      position:absolute;
-      /* float:bottom; */
-      width: 10%;
-      height: 20%;
-      left: 60%;
-      top: 30%;
-      border: 3px solid #f10ce6;
-    }
+    <title>PATH Story Teller </title>
+  
 
 
 
-    div#face_choicer_footer{
-      position:absolute;
-      /* float:bottom; */
-      width: 20%;
-      height: 10%;
-      left: 40%;
-      top: 80%;
-      border: 3px solid #e71818;
-    }
-
-    div#canvas_panel{
-      position:relative;
-      /* float:bottom; */
-      width: 50%;
-      height: 40%;
-
-      border: 3px solid #18e756;
-    }
-
-    .comic_class{
-      height: 100px;
-      width: 100px;
-      background-color: powderblue;
-      position:relative; 
-
-    }
-
-    .choice_img{
-      height: 100px;
-      width: 100px;
-    }
-
-    .char_menu{
-      height: 100px;
-      width: 500px;
-      background-color: rgb(87, 46, 134);
-      position:relative; 
-
-    }
-
-    .bg_menu{
-      height: 100px;
-      width: 500px;
-      background-color: rgb(0, 37, 245);
-      position:relative; 
-    }
-    .bg_button{
-      max-width: 20%;
-      max-height: 20%;
-      height: 100%;
-      width: 100%;
-      background-color: rgb(74, 161, 47);
-    }
-    .char_button{
-      max-width: 20%;
-      max-height: 20%;
-      height: 100%;
-      width: 100%;
-      background-color: rgb(74, 161, 47);
-    }
-
-    .face_canvas{
-      position:absolute;
-      width: 20%;
-      /* padding-top: 20%; */
-      /* position: relative; */
-      left: 40%;
-      top: 30%;
-
-      /* display: none; */
-
-    }
-
-    .canvas{
-      width: 80%;
-      height: 80%;
-      background-color: rgb(74, 161, 47);
-    }
-
-
-  </style>
 </head>
+
+
 
 <body>
  
+    <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-md bgTextBox navbar-light alien ">
+    <!-- Brand -->
+    <a class="navbar-brand alien" href="index.html"><img src="img/logos/Pram_Logo_Banner.png" alt="logo" style="height:80px;">
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Comic Strip</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="code.html">code</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">about</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+ <!-- End Navigation bar -->
+
+
+
+
+
+
+
+
   <div id="overlay">
     <!-- <div id="face_choicer_body">   -->
       
     <canvas id="face_canvas" class="face_canvas" width="300px" height="300px"></canvas>
+    
     <div id="face_choicer_right">
 
-      <button onclick="move_eye(true)" style="position: absolute;  top:20%;left:0%;">
-        next eye
+      <button onclick="move_eye(true)" class="button" style="position: absolute;  top:20%;left:20%;">
+       Eye →
       </button>
 
-      <button onclick="move_mouth(true)" style="position: absolute;  top:70%;left:0%;">
-        next_mouth
+      <button onclick="move_mouth(true)" class="button" style="position: absolute;  top:70%;left:20%;">
+        Mouth →
       </button>
     </div>
 
 
-    <div id="face_choicer_left" >
-      <button onclick="move_eye(false)" style="position: absolute; float: right;left:0%; top:20%;">
-        Prev eye
+    <div id="face_choicer_left">
+      <button onclick="move_eye(false)" class="button" style="position: absolute; float: right;left:0%; top:20%;">
+        ← Eye 
       </button>  
     
-      <button onclick="move_mouth(false)" style="position: absolute; float: right;left:0%; top:70%;">
-        prev_mouth
+      <button onclick="move_mouth(false)" class="button"style="position: absolute; float: right;left:0%; top:70%;">
+        ← Mouth 
       </button>
-
     </div>
 
-    <button onclick="edit_expression()" style="position: relative; left:40%;  top:65%;">
+    <button onclick="edit_expression()" class="button"style="position: relative; left:42%;  top:80%;">
       OK
     </button>
 
-    <button onclick="overlay_off()" style="position: relative; left:40%; top:65%;">
+    <button onclick="overlay_off()"class="button" style="position: relative; left:42%; top:80%;">
       back
     </button>
 
-    <!-- <div id="face_choicer"> -->
-    <!-- </div>  -->
-
-    
-
-      <!-- <div id="face_choicer_footer">
-        <button onclick="move_eye(false)" style="position: relative; top:0%;left:0%;">
-          Prev eye
-        </button>
-        
-        <button onclick="move_eye(true)" style="position: relative; float: right; top:0%;left:0%;">
-          next eye
-        </button>
-
-        <button onclick="move_mouth(false)" style="position: relative; top:0%;left:20%;">
-          prev_mouth
-        </button>
-        
-        <button onclick="move_mouth(true)" style="position: relative; float: right; top:0%;left:20%;">
-          next_mouth
-        </button>
-
-        <button onclick="open_comic()" style="position: relative;  top:-100%;">
-          OK
-        </button>
-    
-        <button onclick="overlay_off()" style="position: relative; top:-100%;">
-          back
-        </button>
-
-      </div> -->
       
-    
-
-
-
   </div>
 
 
-    <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-md bgTextBox navbar-light alien">
-      <!-- Brand -->
-      <a class="navbar-brand alien" href="index.html"><img src="img/icon.png" alt="logo" style="width:40px;"> Story Teller
-      </a>
-  
-      <!-- Toggler/collapsibe Button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index2.html">Story</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="code.html">code</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">about</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
- 
-
-  <!-- <button onclick="add_img()">Add character</button>
-  <button onclick="add_bg()">Add bg</button> -->
 
 
 
-  <div id = "side_panel">
 
-    <div id="main_panel">
 
+
+
+  <div id = "setting_panel" class="bg-custom-1 ">
+
+    <div id="char_bg_panel">
+
+
+        <br>
+        <!-- <button onclick="init_comic()" > -->
+          <h1 class=" pb-0 pt-3 container-special ">  Choose Your Character & Background </h1>
+        <!-- </button> -->
+        <div class="line "></div>
+
+<br>
+<br>
+
+     
+     
+    </div>
+
+
+
+
+
+    <div id="dialog_panel"> 
+
+      
       <br>
       <!-- <button onclick="init_comic()" > -->
-        Choose character and background
+        <h1 class=" pb-0 pt-3 container-special ">  Add Your Text </h1>
       <!-- </button> -->
-  
-    </div>
-    <br>
-    <br>
-    <div id="form_panel"> 
-      <form id="form1">
+      <div class="line "></div>
+
+<br>
+<br>
               <textarea id="area1" onkeyup="countChar(this)" maxlength="240" cols=50 rows=5 style="width: 100%; max-width: 100%;"></textarea>
+             
+             
+             
               <div id="charNum">0/240</div>
               <br>
-              <input type="button" value="Add text" onclick="add_dialog()" />
-              <button type="button" onClick="remove_dialog()">Remove text</button>
+
+              <div class="container container-special bg-custom-1 ">
+      
+                <div class="row pb-3">
+          
+                  <div class="col-md-6 pb-3  ">
+                   
+          
+                    <div class="container-special">
+                      <input type="button" class="button" value="Add Your text" onclick="add_dialog()" />
+                    </div>
+                    
+          
+                    <!-- <button type="button" , id="edit_expression" onClick="overlay_on()">Change expression</button> -->
+          
+                  </div>
+              
+               
+                  <div class="col-md-6 pb-3 ">
+                    <div class="container-special">
+                      <button type="button" class="button" onClick="remove_dialog()">Remove text</button>
+                    </div>
+
+                    <!-- <button type="button" onClick="add_to_gallery()">Add your comic panal</button> -->
+          
+          
+                    </div>
+        
+          
+            
+                </div>
+            
+              </div>
+
+
+
+
+              
+              <!-- <input type="button" class="button" value="Add text" onclick="add_dialog()" />
+              <button type="button" class="button" onClick="remove_dialog()">Remove text</button> -->
 
       </form>
-  </div>
+
+
+
+
+    </div>
 
   
 
   <!-- <button type="button" onClick="speech_bubble_test()">test_dialog</button> -->
+  </div>
+
+
+
+
+
 
   
-  </div>
+  <div id = "canvas_panel" class="  bg-custom-1">
 
 
-
-  <div id = "canvas_panel">
-    <canvas id="canvas" class="canvas" width="2300" height="2000"></canvas>
-    <button type="button" , id="edit_expression" onClick="overlay_on()">Change expression</button>
-    <button type="button" onClick="add_to_gallery()">add the comic</button>
-    <button type="button" onClick="download()">Download</button>
-    <br>
-    <br>
-    <div id="gallery">
-      <!-- <canvas id="mini_canvas_1" class="mini_canvas" width="300" height="300"></canvas> -->
-      <!-- <canvas id="mini_canvas_2" class="mini_canvas" width="300" height="300"></canvas> -->
+    <canvas id="canvas" class="canvas container-special"></canvas>
+   
+   
+    <div class="container container-special bg-custom-1 ">
       
-      
+      <div class="row pl-0 pt-0 ">
+
+        <div class="col-md-4 pb-3   ">
+         
+
+          <div class="container-special">
+            <button id="edit_expression" onClick="overlay_on()"class="button ">Change expression</button>
+          </div>
+          
+
+          <!-- <button type="button" , id="edit_expression" onClick="overlay_on()">Change expression</button> -->
+
+        </div>
+    
+     
+        <div class="col-md-4 pb-3 ">
+          <div class="container-special">
+            <button  onclick="add_to_gallery()" class="button ">Add comic panal</button>
+          </div>
+          <!-- <button type="button" onClick="add_to_gallery()">Add your comic panal</button> -->
+          </div>
+
+
+          <div class="col-md-4 pb-3  ">
+            <div class="container-special">
+              <button  onclick="download()" class="button ">Download comic</button>
+            </div>
+            <!-- <button type="button" onClick="download()">Download comic strip</button> -->
+          </div>
+      </div>
+  
     </div>
+
+
+
+
+      <div id="gallery">
+        <!-- <canvas id="mini_canvas_1" class="mini_canvas" width="300" height="300"></canvas> -->
+        <!-- <canvas id="mini_canvas_2" class="mini_canvas" width="300" height="300"></canvas> -->
+        
+      </div>
+
+
+
+    </div>
+    
+
+
+
+
+
+<!-- footer section-->
+<footer class="footer font-small pt-1">
+
+ 
+
+  <div class="container container-special">
+    
+    <div class="row">
+      <div class="line "></div>
+      <div class="col-md-4 container-special aside pt-5 pb-3 px-5">
+        <img  src="img/logos/2Seas_transparent_Logo.png" class="logo-footer" alt="2 2Seas">  
+      </div>
+  
+   
+      <div class="col-md-8 text-white container-special px-5 py-5 main ">
+        <p style="font-size:12px;" class="text-black mb-0" >
+          PATH – PerinAtal menTal Health – 
+          is part of the Interreg VA 2Seas programme and receives funding 
+          from the European Regional Development Fund.</p>
+        </div>
+
+    </div>
+
   </div>
+  
+  <div class="container-fluid ">
+  
+  <div style="font-size:12px;" class="footer-copyright container-special font-small py-4 px-0">© 2022 Copyright:
+    <a href="https://bournemouth.ac.uk/" > Bournemouth University</a>
+  </div>
+
+  </div>
+
+  </footer>
+  <!-- end of footer section-->
+
+
+
+
 
 
 
@@ -439,6 +376,10 @@
     }
 
     </script>
+
+
+
+
 
 </body>
 

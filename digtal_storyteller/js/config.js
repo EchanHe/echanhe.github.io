@@ -11,9 +11,9 @@ var config ={
       "figure": {
         "filename": "figure1.svg",
         "width": 300,
-        "height": 630,
-        "x_offset_from_bg": 415,
-        "y_offset_from_bg": 260,
+        "height": 640,
+        "x_offset_from_bg": 430,
+        "y_offset_from_bg": 243,
         "speech_bubble_offsets":{
           "long":{"x":-310,"y":-430},
           "medium":{"x":-360,"y": -180},
@@ -128,7 +128,7 @@ var config ={
         "width": 291,
         "height": 673,
         "x_offset_from_bg": 420,
-        "y_offset_from_bg": 220,
+        "y_offset_from_bg": 210,
         "speech_bubble_offsets":{
           "long":{"x":-310,"y":470},
           "medium":{"x":-340,"y": -140},
@@ -353,10 +353,10 @@ var config ={
       },
       "figure": {
         "filename": "figure4.svg",
-        "width": 285,
-        "height": 624,
-        "x_offset_from_bg": 440,
-        "y_offset_from_bg": 270,
+        "width": 300,
+        "height": 639,
+        "x_offset_from_bg": 420,
+        "y_offset_from_bg": 243,
         "speech_bubble_offsets":{
           "long":{"x":-310,"y":420},
           "medium":{"x":-360,"y": -190},
@@ -467,10 +467,10 @@ var config ={
       },
       "figure": {
         "filename": "figure5.svg",
-        "width": 245,
-        "height": 730,
-        "x_offset_from_bg": 380,
-        "y_offset_from_bg": 165,
+        "width": 225,
+        "height": 670,
+        "x_offset_from_bg": 460,
+        "y_offset_from_bg": 212,
         "speech_bubble_offsets":{
           "long":{"x":-280,"y":525},
           "medium":{"x":-300,"y": -85},
@@ -583,8 +583,8 @@ var config ={
         "filename": "figure6.svg",
         "width": 340,
         "height": 665,
-        "x_offset_from_bg": 380,
-        "y_offset_from_bg": 230,
+        "x_offset_from_bg": 390,
+        "y_offset_from_bg": 218,
         "speech_bubble_offsets":{
           "long":{"x":-280,"y":460},
           "medium":{"x":-300,"y": 443},

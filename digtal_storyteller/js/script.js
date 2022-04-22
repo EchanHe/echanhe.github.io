@@ -13,7 +13,7 @@ function loadpage_home(){
     //     console.log(config.collection.length);
     // });
 
-    var targetelement= document.getElementById("main_panel");
+    var targetelement= document.getElementById("char_bg_panel");
 
     //add face choices
     create_choices(targetelement , "char_panel", "char_info", config ,"characters", key_l1 = 'face');
@@ -23,7 +23,7 @@ function loadpage_home(){
         var length = Object.keys(config[choice_type]).length;
         var div = document.createElement("div");
         div.id = div_id;
-
+        // div.style.width = "100%";
 
         for (i=0;i<length; i++){
             var label = document.createElement("label");
@@ -55,21 +55,41 @@ function loadpage_home(){
                 " class=\"choice_img\"  onclick=select_char_or_bg(this) style=\"padding:0px 5px;\">";
             }
 
+            // canvas label version
+            // if(i==0){
+            //     label.innerHTML = "<input type=\"radio\" name=" + label_name+ " value=" + key +
+            //     " checked> <canvas id=" +label_name+key+" class=\"choice_canvas\" value=" + key + 
+            //     " onclick=select_char_or_bg(this)></canvas>"
+            // }else{
+            //     label.innerHTML = "<input type=\"radio\" name=" + label_name+ " value=" + key +
+            //     " unchecked> <canvas id=" +label_name+key+ " class=\"choice_canvas\" value=" + key + 
+            //     " onclick=select_char_or_bg(this)></canvas>"
+            // }
+
+            // var tn =new Image();
+            // tn.onload = img_onload;
+            // function img_onload(){
+            //     var canvas = document.getElementById(label_name+key);
+            //     var context = canvas.getContext("2d");
+            //     context.canvas.width  = tn.width;
+            //     context.canvas.height = tn.height;
+            //     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            //     context.drawImage(tn, 0, 0 );
+            // };
+            // tn.src = folder + filename
+
             div.appendChild(label);
         }
         
         targetelement.appendChild(div);
     }
-
     select_char_or_bg('init');
 }
+
 
 function build_expression(filename){
 
     // show_image(src, 276,110, "Google Logo");
-
-    var targetelement= document.getElementById("face_choicer_body");
-
     var root_folder = config['folder'];
     var subfolder = config['characters'][char_key]['subfolder']
 
@@ -137,6 +157,9 @@ function draw_face_canvas(){
     // context.canvas.width  = window.innerWidth*0.75;
     // context.canvas.height = window.innerHeight*0.75;
 
+    context.canvas.width  = 1000;
+    context.canvas.height = 1000;
+
     console.log("Canvas figure size: "+context.canvas.width +" x " + context.canvas.height);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
@@ -153,7 +176,6 @@ function draw_face_canvas(){
 
 function move_eye(next){
     //remove previous eyes
-    var targetelement= document.getElementById("face_choicer_body")
     // document.getElementById("img_eye").remove();
     //choose the next/prev eye
     id_eye = prev_next_id(id_eye, l_eye.length,  next);
@@ -178,7 +200,6 @@ function move_eye(next){
 }
 
 function move_mouth(next){
-    var targetelement= document.getElementById("face_choicer_body")
     // document.getElementById("img_mouth").remove();
     id_mouth = prev_next_id(id_mouth, l_mouth.length,  next);
 
@@ -215,44 +236,6 @@ function prev_next_id(idx, length,next){
     return idx;
 };
 
-function draw_face(){
-
-
-
-    // The scale of image from the read in size to the Illustrator size
-    ori_width = v_character['face']['width'];
-    ori_height = v_character['face']['height'];
-
-    svg_resize_scale= calculateAspectRatio(ori_width,ori_height, img.width,img.height );
-    // the scale of image to the canvas
-    ratio = calculateAspectRatio(img.width,img.height,targetelement.offsetWidth,targetelement.offsetHeight);
-    
-    
-
-    console.log("scale ratio for the face: "+ratio);
-
-    console.log("face img origin size: "+img.width +" x " + img.height);
-
-    img.width = img.width * ratio;
-    img.height = img.height * ratio;
-    console.log("face img scaled size: "+img.width +" x " + img.height);
-
-    //relative image size
-    // img.style.maxHeight = "100%";
-    // img.style.maxWidth = "100%";
-
-
-    // eye.width = eye.width * ratio;
-    // eye.height = eye.height * ratio;
-
-    // eye.id = "img_eye";
-    
-    // eye.style.position = "absolute"
-    // eye.style.left = x_offset * ratio+'px';
-    // eye.style.top = y_offset * ratio+'px'; 
-
-    targetelement.appendChild(img);
-};
 
 function draw_parts(targetelement, img, ratio, x_offset,y_offset, id_name  ){
     img.id = id_name;
@@ -302,8 +285,14 @@ var char = new Image();
 var eye = new Image();
 var mouth = new Image();
 var dialog = new Image();
-var text = '';
+var global_text = '';
 var imagesLoaded = 0;
+
+
+// var comic_limit=2;
+var comic_config=[];
+var current_mini_canvas = -1;
+var bubble_key='None';
 function add_bg_char_to_canvas(){
     // Draw Image function
     imagesLoaded = 0;
@@ -365,34 +354,29 @@ function add_bg_char_to_canvas(){
 
 
 
-// var comic_limit=2;
-var comic_config=[];
-var current_mini_canvas = -1;
-var bubble_key='None';
+
 function add_to_gallery(){
-    // var circle_canvas = document.getElementById("mini_canvas_1");
-    var canvas = document.createElement('canvas');
-    
-    var mini_canvas_idx = comic_config.length+1;
-    canvas.id = "mini_canvas_" + mini_canvas_idx;
-    canvas.className = 'mini_canvas';
 
-    canvas.style.backgroundColor =  "rgb(215, 214, 218)";
-    // canvas.style.padding = "35px";
-    canvas.style.margin= "5px";
-    var div = document.getElementById('gallery');
-    div.appendChild(canvas)
-
-    // if (comic_config.length ==comic_limit){
-        // alert("No more comic can be added");
-    // Check if there is a dialog
-    // }else 
-    if(text ==''){
-        alert("add dialog first");
+    if(global_text ==''){
+        alert("A dialog need to be added before adding the comic to gallery.");
     }else {
         
-        comic_config.push({"text":text, "bg":bg })
-        draw_character(canvas.id ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key)
+        // adding comic to canvas
+        var canvas = document.createElement('canvas');
+    
+        var mini_canvas_idx = comic_config.length+1;
+        canvas.id = "mini_canvas_" + mini_canvas_idx;
+        canvas.className = 'mini_canvas';
+    
+        canvas.style.backgroundColor =  "rgb(215, 214, 218)";
+        // canvas.style.padding = "35px";
+        canvas.style.margin= "5px";
+        var div = document.getElementById('gallery');
+        div.appendChild(canvas)
+
+
+        comic_config.push({"text":global_text, "bg":bg })
+        draw_character(canvas.id ,bg, char,eye,mouth, char_key , global_text , dialog ,bubble_key)
         
         // Redraw the main canvas and reset the dialog
         clean_textarea();
@@ -402,7 +386,8 @@ function add_to_gallery(){
     canvas.style.height="20%";
 }
 
-// select and highlight canvas
+// select and highlight gallery canvas
+// The main canvas will draw the selected comic.
 var hilightElement = function(e) {
     var event = e || window.event;
 
@@ -474,28 +459,7 @@ function redraw(){
 
 }
 
-// To be deleted bubble test
-// bubble_id = 0;
-// bubble_keys = ["long" , "medium" , "small" , "large"];
-// function speech_bubble_test(){
-    
-//     bubble_id++;
-//     if(bubble_id>3){
-//         bubble_id=0;
-//     }
-//     bubble_key = bubble_keys[bubble_id];
 
-//     var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
-//     // mouth.src = mouth_folder + l_mouth[id_mouth]['filename'];  // older version config using 'filename'
-//     dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
-    
-//     console.log("using speech bubble: "+dialog.src )
-
-//     dialog.onload = function () {
-//         draw_canvas();
-
-//     };
-// }
 
 
 function countChar(val) {
@@ -512,11 +476,6 @@ function countChar(val) {
 
 
 
-
-
-
-
-
 //------------
 
 
@@ -525,36 +484,57 @@ function select_char_or_bg(ele){
 
 
     
-    if(ele.name == "bg_info"){
-        console.log(ele.value);
-        var p =ele.parentNode;
-        var children = p.children;
-        bg_key = children[0].value;
+    // if(ele.name == "bg_info"){
+    // if(ele.id == "bg_info"){
+        
+    //     var p =ele.parentNode;
+    //     var children = p.children;
+    //     bg_key = children[0].value;
+    //     char_key = get_choice(document.getElementsByName('char_info'));
+
+    //     console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
+    // // }else if(ele.name == 'char_info'){
+    // }else if(ele.id == 'char_info'){
+    //     var p =ele.parentNode;
+    //     var children = p.children;
+    //     char_key = children[0].value;
+    //     bg_key = get_choice(document.getElementsByName('bg_info'));
+    //     console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
+    // }else if(ele == 'init'){
+    //     char_key = get_choice(document.getElementsByName('char_info'));
+    //     bg_key = get_choice(document.getElementsByName('bg_info'));
+    // }else{
+    //     alert("error");
+    // }
+
+    if(ele.name == "bg_info" |ele.name == "char_info"  | ele == 'init'){
+        
         char_key = get_choice(document.getElementsByName('char_info'));
-    }else if(ele.name == 'char_info'){
-        console.log(ele.value);
-        var p =ele.parentNode;
-        var children = p.children;
-        char_key = children[0].value;
         bg_key = get_choice(document.getElementsByName('bg_info'));
-    }else if(ele == 'init'){
-        char_key = get_choice(document.getElementsByName('char_info'));
-        bg_key = get_choice(document.getElementsByName('bg_info'));
+
     }else{
         alert("error");
     }
+
+
+    // if(ele.className == "choice_canvas" | ele == 'init'){
+        
+    //     char_key = get_choice(document.getElementsByName('char_info'));
+    //     bg_key = get_choice(document.getElementsByName('bg_info'));
+
+    //     console.log(" char value=" + char_key+ " bg value=" + bg_key);
+    // }else{
+    //     alert("error");
+    // }
+
    
 
-    console.log("bg:" + bg_key + " char:" +char_key)
+    console.log("Char, bg choices:" + " char:" +char_key+ " bg:" + bg_key )
 
     init_comic()
 
     // document.getElementById("bg_info").disabled = true;  
     // document.getElementById("char_info").disabled = true;  
-    
-    
-
-
 }
 
 
@@ -612,7 +592,7 @@ function remove_dialog(){
 
 function clean_textarea(){
     document.getElementById('area1').value = '';
-    text ='';
+    global_text ='';
     var word_count = document.getElementById('charNum');
     word_count.innerHTML = "0/240";
 }
@@ -854,9 +834,9 @@ function draw_gallery(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog
 
 function add_dialog() {
     // Draw Image function
-    text= document.getElementById('area1').value
+    global_text= document.getElementById('area1').value
     
-    n_char = text.length;
+    n_char = global_text.length;
     if(n_char>0 & n_char<20){
         bubble_key='small';
     }else if (n_char<102){
@@ -877,7 +857,7 @@ function add_dialog() {
 
     function img_onload(){
 
-        draw_character("canvas" ,bg, char,eye,mouth, char_key , text , dialog ,bubble_key);
+        draw_character("canvas" ,bg, char,eye,mouth, char_key , global_text , dialog ,bubble_key);
 
     };
 }
@@ -945,13 +925,58 @@ function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
  }
 // download https://jsfiddle.net/user2314737/28wqq1gu/
  function download() {
-    var canvas = document.getElementById("canvas");
+    
+    if(global_text ==''){
+        alert("Only comic with dialog can be downloaded");
+    }else{
+        var canvas = document.getElementById("canvas");
+    }
+    
     // var img    = canvas.toDataURL("image/png");
     // document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
 
-    var link = document.createElement("a");
-    link.download = current_mini_canvas+'png';
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-
 }
+
+
+
+
+// functions not using
+
+// function draw_face(){
+
+
+
+//     // The scale of image from the read in size to the Illustrator size
+//     ori_width = v_character['face']['width'];
+//     ori_height = v_character['face']['height'];
+
+//     svg_resize_scale= calculateAspectRatio(ori_width,ori_height, img.width,img.height );
+//     // the scale of image to the canvas
+//     ratio = calculateAspectRatio(img.width,img.height,targetelement.offsetWidth,targetelement.offsetHeight);
+    
+    
+
+//     console.log("scale ratio for the face: "+ratio);
+
+//     console.log("face img origin size: "+img.width +" x " + img.height);
+
+//     img.width = img.width * ratio;
+//     img.height = img.height * ratio;
+//     console.log("face img scaled size: "+img.width +" x " + img.height);
+
+//     //relative image size
+//     // img.style.maxHeight = "100%";
+//     // img.style.maxWidth = "100%";
+
+
+//     // eye.width = eye.width * ratio;
+//     // eye.height = eye.height * ratio;
+
+//     // eye.id = "img_eye";
+    
+//     // eye.style.position = "absolute"
+//     // eye.style.left = x_offset * ratio+'px';
+//     // eye.style.top = y_offset * ratio+'px'; 
+
+//     targetelement.appendChild(img);
+// };
