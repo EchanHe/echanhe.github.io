@@ -935,10 +935,11 @@ function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
         alert("Only comic with dialog can be downloaded");
     }else{
         var canvas = document.getElementById("canvas");
+        var img    = canvas.toDataURL("image/png");
+        document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
     }
     
-    // var img    = canvas.toDataURL("image/png");
-    // document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
+
 
 }
 
