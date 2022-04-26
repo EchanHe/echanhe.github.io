@@ -1,4 +1,5 @@
 
+
 var id_eye = 0;
 var id_mouth = 0;
 var bool_draw_face
@@ -618,7 +619,13 @@ function edit_expression(){
     function img_onload(){
         imagesLoaded++;
         if(imagesLoaded == 2){
-            draw_character("canvas" ,bg, char,eye,mouth, char_key );
+            if(global_text==""){
+                draw_character("canvas" ,bg, char,eye,mouth, char_key );
+            }
+            else{
+                draw_character("canvas" ,bg, char,eye,mouth, char_key , global_text , dialog ,bubble_key);
+            }
+            
         }
     };
 
