@@ -483,37 +483,35 @@ function select_char_or_bg(ele){
 
 
     
-    // if(ele.name == "bg_info"){
-    // if(ele.id == "bg_info"){
+    if(ele.name == "bg_info"){
         
-    //     var p =ele.parentNode;
-    //     var children = p.children;
-    //     bg_key = children[0].value;
-    //     char_key = get_choice(document.getElementsByName('char_info'));
+        var p =ele.parentNode;
+        var children = p.children;
+        bg_key = children[0].value;
+        char_key = get_choice(document.getElementsByName('char_info'));
+        console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
+    }else if(ele.name == 'char_info'){
 
-    //     console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
-    // // }else if(ele.name == 'char_info'){
-    // }else if(ele.id == 'char_info'){
-    //     var p =ele.parentNode;
-    //     var children = p.children;
-    //     char_key = children[0].value;
-    //     bg_key = get_choice(document.getElementsByName('bg_info'));
-    //     console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
-    // }else if(ele == 'init'){
-    //     char_key = get_choice(document.getElementsByName('char_info'));
-    //     bg_key = get_choice(document.getElementsByName('bg_info'));
-    // }else{
-    //     alert("error");
-    // }
-
-    if(ele.name == "bg_info" |ele.name == "char_info"  | ele == 'init'){
-        
+        var p =ele.parentNode;
+        var children = p.children;
+        char_key = children[0].value;
+        bg_key = get_choice(document.getElementsByName('bg_info'));
+        console.log("selected "+ ele.value + " char value=" + char_key+ " bg value=" + bg_key);
+    }else if(ele == 'init'){
         char_key = get_choice(document.getElementsByName('char_info'));
         bg_key = get_choice(document.getElementsByName('bg_info'));
-
     }else{
         alert("error");
     }
+
+    // if(ele.name == "bg_info" |ele.name == "char_info"  | ele == 'init'){
+        
+    //     char_key = get_choice(document.getElementsByName('char_info'));
+    //     bg_key = get_choice(document.getElementsByName('bg_info'));
+
+    // }else{
+    //     alert("error");
+    // }
 
 
     // if(ele.className == "choice_canvas" | ele == 'init'){
