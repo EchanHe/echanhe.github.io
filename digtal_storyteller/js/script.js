@@ -407,7 +407,9 @@ var hilightElement = function(e) {
         current_mini_canvas = target.id[target.id.length-1];
         if(current_mini_canvas<=comic_config.length){
         target.style.outline = "solid blue 5px";
-        redraw();
+
+        
+        redraw_from_gallery();
         }
         
 
@@ -422,12 +424,12 @@ var hilightElement = function(e) {
         document.attachEvent('onclick', hilightElement);
     }
 
-
-function redraw(){
+//Function used to draw the comic from comics in the gallery.
+function redraw_from_gallery(){
     // var circle_canvas = document.getElementById("mini_canvas_1");
 
-    var text_temp = comic_config[current_mini_canvas-1]["text"]
-    n_char = text_temp.length;
+    global_text = comic_config[current_mini_canvas-1]["text"]
+    n_char = global_text.length;
     if(n_char>0 & n_char<20){
         bubble_key='small';
     }else if (n_char<102){
@@ -448,14 +450,10 @@ function redraw(){
 
     function img_onload(){
 
-        draw_character("canvas",bg, char,eye,mouth, char_key ,  text_temp,
+        draw_character("canvas",bg, char,eye,mouth, char_key ,  global_text,
         dialog ,bubble_key)
 
     };
-
-
-
-    
 
 }
 
@@ -479,7 +477,8 @@ function countChar(val) {
 //------------
 
 
-
+//actions for selecting characters and backgrounds
+// Draw comic on the comic panel.
 function select_char_or_bg(ele){
 
 
@@ -674,55 +673,7 @@ function draw_character(canvas_id ,bg, char,eye,mouth, char_key , text='' , dial
 
     //Draw and dialog text
     if(text !=''){
-        font = 32;
-        console.log("Use speech bubble:" +bubble_key );
-        var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
-        var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
-    
-        var bubble_width = config['speech_bubbles'][bubble_key]['width'];
-        var bubble_height = config['speech_bubbles'][bubble_key]['height'];
-        context.drawImage(dialog, bubble_x_offset, bubble_y_offset, width = bubble_width, height = bubble_height);
-        
-
-
-        // bubble_type='medium';
-        if(bubble_key=='large'){
-            n_char_per_line = 25;
-        }else if(bubble_key=='medium'){
-            n_char_per_line = 17;
-        }else if(bubble_key=='long'){
-            n_char_per_line = 60;
-        }else if(bubble_key=='small'){
-            n_char_per_line = 10;
-        }
-
-        
-        text_array =  foldRgx(text, n_char_per_line);
-        // new_text = text_array.join('\n');
-
-        console.log("displaying text with font size: " + font)
-        console.log("Characters per line: " + n_char_per_line)
-        console.log("Lines: " + text_array.length)
-
-        // x_dia = x_char 
-        // y_dia = y_char 
-
-        x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
-        y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
-        
-        // dia_width =  font * 0.5  * n_char_per_line;
-        // dia_height=40* (text_array.length-1);
-        // context.drawImage(dialog, x_dia, y_dia, dw =dia_width, dh =dia_height);
-        // context.lineWidth = 1;
-        // context.fillStyle = "#CC00FF";
-        // context.lineStyle = "#ffff00";
-        
-        context.font = font+"px sans-serif";
-
-        lineheight=font+ 1;
-        for (var i = 0; i<text_array.length; i++){
-            context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
-        }
+        draw_dialog(context, dialog, text, bubble_key)
     }
 }
 
@@ -780,7 +731,7 @@ function draw_gallery(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog
 
     //Draw and dialog text
     if(text !=''){
-        font = 34;
+        font = 32;
         console.log("Use speech bubble:" +bubble_key );
         var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
         var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
@@ -832,10 +783,66 @@ function draw_gallery(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog
     }
 }
 
+function draw_dialog(context, dialog, text, bubble_key){
+    var font = 32;
+    console.log("Use speech bubble:" +bubble_key );
+    var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
+    var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
+
+    var bubble_width = config['speech_bubbles'][bubble_key]['width'];
+    var bubble_height = config['speech_bubbles'][bubble_key]['height'];
+    context.drawImage(dialog, bubble_x_offset, bubble_y_offset, width = bubble_width, height = bubble_height);
+    
+
+
+    // bubble_type='medium';
+    if(bubble_key=='large'){
+        n_char_per_line = 25;
+    }else if(bubble_key=='medium'){
+        n_char_per_line = 17;
+    }else if(bubble_key=='long'){
+        n_char_per_line = 60;
+    }else if(bubble_key=='small'){
+        n_char_per_line = 10;
+    }
+
+    
+    text_array =  foldRgx(text, n_char_per_line);
+    // new_text = text_array.join('\n');
+
+    console.log("displaying text with font size: " + font)
+    console.log("Characters per line: " + n_char_per_line)
+    console.log("Lines: " + text_array.length)
+
+    // x_dia = x_char 
+    // y_dia = y_char 
+
+    x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
+    y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
+    
+    // dia_width =  font * 0.5  * n_char_per_line;
+    // dia_height=40* (text_array.length-1);
+    // context.drawImage(dialog, x_dia, y_dia, dw =dia_width, dh =dia_height);
+    // context.lineWidth = 1;
+    // context.fillStyle = "#CC00FF";
+    // context.lineStyle = "#ffff00";
+    
+    context.font = font+"px sans-serif";
+
+    lineheight=font+ 1;
+    for (var i = 0; i<text_array.length; i++){
+        context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
+    }
+}
+
+
 function add_dialog() {
     // Draw Image function
     global_text= document.getElementById('area1').value
     
+    //Remove all the new lines.
+    global_text = global_text.replace(/\n\s*\n/g, '');
+
     n_char = global_text.length;
     if(n_char>0 & n_char<20){
         bubble_key='small';
