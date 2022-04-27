@@ -712,13 +712,15 @@ function draw_dialog(context, dialog, text, bubble_key){
     }else if(bubble_key=='long'){
         n_char_per_line = 60;
     }else if(bubble_key=='small'){
-        n_char_per_line = 10;
+        n_char_per_line = 8;
     }
 
 
-    fold_text_to_lines(text,n_char_per_line)
     
-    text_array =  foldRgx(text, n_char_per_line);
+    
+    // text_array =  foldRgx(text, n_char_per_line);
+    var text_array =  fold_text_to_lines(text, n_char_per_line);
+
     // new_text = text_array.join('\n');
 
     console.log("displaying text with font size: " + font)
@@ -728,8 +730,8 @@ function draw_dialog(context, dialog, text, bubble_key){
     // x_dia = x_char 
     // y_dia = y_char 
 
-    x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
-    y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
+    var x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
+    var y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
     
     // dia_width =  font * 0.5  * n_char_per_line;
     // dia_height=40* (text_array.length-1);
@@ -740,10 +742,12 @@ function draw_dialog(context, dialog, text, bubble_key){
     
     context.font = font+"px sans-serif";
 
-    lineheight=font+ 1;
+    lineheight=font* 0.9;
     for (var i = 0; i<text_array.length; i++){
         context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
     }
+
+
 }
 
 
@@ -837,12 +841,51 @@ function foldRgx(s, n) {
 }
 
 
-function fold_text_to_lines(text, n) {
-    text_array = text.split(" ")
+function fold_text_to_lines(text, lower_bound) {
+    var text_array = text.split(" ")
 
+    
 
-    var rgx = new RegExp('.{0,' + n + '}', 'g');
-    return s.match(rgx);
+    var upper_bound=lower_bound + 5
+    
+    var text_len=0
+    var result=''
+    var result_list = []
+    for (var i = 0; i<text_array.length; i++){
+        if(result==''){
+            var temp_result=result+text_array[i] 
+        }else{
+            var temp_result=result+" "+text_array[i] 
+        }
+        
+
+        text_len=temp_result.length
+
+        if(text_len>=upper_bound){
+            // Very long word in the end of the line.
+            text_len=0
+            result_list.push(result);
+            result = text_array[i] +" "
+            temp_result=""
+
+        }else if(text_len<lower_bound){
+            //smaller than the lower bound of the length
+            //keep adding
+            result = temp_result;
+
+        }else if(text_len<upper_bound & text_len>=lower_bound){
+            //in the range of lower and upper
+            //save this line
+            result_list.push(temp_result);
+            temp_result="";
+            result=""
+        }
+    }
+
+    result_list.push(result)
+
+    return result_list
+
 }
 
 function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
