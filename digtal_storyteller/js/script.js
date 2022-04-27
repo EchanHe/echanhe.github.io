@@ -1,5 +1,4 @@
 
-
 var id_eye = 0;
 var id_mouth = 0;
 var bool_draw_face
@@ -279,7 +278,9 @@ function loadpage(){
 
     // var bg_name =  localStorage.getItem("bg_name")
     // add_bg_with_name(bg_name);
-    add_bg_char_to_canvas();
+    // add_bg_char_to_canvas();
+
+    load_comic(load_from_gallery=false, add_text=false)
 }
 var bg = new Image();
 var char = new Image();
@@ -294,67 +295,6 @@ var imagesLoaded = 0;
 var comic_config=[];
 var current_mini_canvas = -1;
 var bubble_key='None';
-function add_bg_char_to_canvas(){
-    // Draw Image function
-    imagesLoaded = 0;
-    bg.onload = img_onload;
-
-    char.onload = img_onload;
-
-    eye.onload = img_onload;
-
-    mouth.onload = img_onload;
-    
-    // dialog.onload = img_onload;
-
-    function img_onload(){
-        imagesLoaded++;
-        if(imagesLoaded == 4){
-            draw_character("canvas" ,bg, char,eye,mouth, char_key );
-        }
-    };
-
-    bg_key = localStorage.getItem("bg_key");
-    char_key = localStorage.getItem("char_key");
-    id_eye = localStorage.getItem("id_eye");
-    id_mouth = localStorage.getItem("id_mouth");
-
-    
-
-
-    var root_folder = config['folder'];
-    var subfolder = config['characters'][char_key]['subfolder']
-    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
-
-    if(subfolder == "None"){
-        var folder  =root_folder;
-    }else{
-        var folder  =root_folder + subfolder;
-    }
-
-    var parts_folder = folder + 'figure_parts/';
-
-    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
-    char.src = folder + config['characters'][char_key]['figure']['filename'];
-
-    //older version using 'filename'
-    // eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['filename']; 
-    // mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['filename'];
-
-    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
-    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
-
-    // window.addEventListener('resize', draw_canvas, false);
-}
-
-
-
-
-
-
-
-
-
 
 function add_to_gallery(){
 
@@ -376,7 +316,8 @@ function add_to_gallery(){
         div.appendChild(canvas)
 
 
-        comic_config.push({"text":global_text, "bg":bg })
+        comic_config.push({"text":global_text, "bg_key":bg_key,"char_key":char_key,"id_eye":id_eye,
+            "id_mouth":id_mouth})
         draw_character(canvas.id ,bg, char,eye,mouth, char_key , global_text , dialog ,bubble_key)
         
         // Redraw the main canvas and reset the dialog
@@ -407,56 +348,23 @@ var hilightElement = function(e) {
 
         current_mini_canvas = target.id[target.id.length-1];
         if(current_mini_canvas<=comic_config.length){
-        target.style.outline = "solid blue 5px";
+        target.style.outline = "solid blue 5px";    
+        // redraw_from_gallery();
 
-        
-        redraw_from_gallery();
+        load_comic(init=false,load_from_gallery=true,add_text=true)
         }
-        
-
     }
     
     
-    };
+};
 
-    if (document.addEventListener){
-        document.addEventListener('click', hilightElement, false);
-    } else if (document.attachEvent){
-        document.attachEvent('onclick', hilightElement);
-    }
-
-//Function used to draw the comic from comics in the gallery.
-function redraw_from_gallery(){
-    // var circle_canvas = document.getElementById("mini_canvas_1");
-
-    global_text = comic_config[current_mini_canvas-1]["text"]
-    n_char = global_text.length;
-    if(n_char>0 & n_char<20){
-        bubble_key='small';
-    }else if (n_char<102){
-        bubble_key='medium';
-    }else if (n_char<175){
-        bubble_key='large';
-    }else{
-        bubble_key='long';
-    }
-
-
-    // bubble_key = bubble_keys[bubble_id];
-    var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
-    dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
-
-
-    dialog.onload =img_onload;
-
-    function img_onload(){
-
-        draw_character("canvas",bg, char,eye,mouth, char_key ,  global_text,
-        dialog ,bubble_key)
-
-    };
-
+if (document.addEventListener){
+    document.addEventListener('click', hilightElement, false);
+} else if (document.attachEvent){
+    document.attachEvent('onclick', hilightElement);
 }
+
+
 
 
 
@@ -529,56 +437,14 @@ function select_char_or_bg(ele){
 
     console.log("Char, bg choices:" + " char:" +char_key+ " bg:" + bg_key )
 
-    init_comic()
+    load_comic(init=true,load_from_gallery=false, add_text=true)
+    // init_comic()
 
     // document.getElementById("bg_info").disabled = true;  
     // document.getElementById("char_info").disabled = true;  
 }
 
 
-function init_comic(){
-
-    
-    bg.onload = img_onload;
-    char.onload = img_onload;
-    eye.onload = img_onload;
-    mouth.onload = img_onload;
-    
-    // dialog.onload = img_onload;
-    imagesLoaded = 0;
-    function img_onload(){
-        imagesLoaded++;
-        if(imagesLoaded == 4){
-            draw_character("canvas" ,bg, char,eye,mouth, char_key );
-
-        }
-    };
-
-
-    //init the comic, so choose a default 
-    id_eye = 0;
-    id_mouth = 0;
-
-    
-    var root_folder = config['folder'];
-    var subfolder = config['characters'][char_key]['subfolder']
-    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
-
-    if(subfolder == "None"){
-        var folder  =root_folder;
-    }else{
-        var folder  =root_folder + subfolder;
-    }
-    var parts_folder = folder + 'figure_parts/';
-
-    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
-    char.src = folder + config['characters'][char_key]['figure']['filename'];
-    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
-    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
-
-    // clean the text area
-    clean_textarea();
-}
     
 function remove_dialog(){
     //use the current eye mouth to draw
@@ -632,6 +498,92 @@ function edit_expression(){
     overlay_off()
 }
 
+function load_comic(init = false, load_from_gallery=false, add_text=false){
+    // ======= Get the char, bg, eye, mouth info from the gallery
+    imagesLoaded = 0;
+    bg.onload = img_onload;
+    char.onload = img_onload;
+    eye.onload = img_onload;
+    mouth.onload = img_onload;
+
+    // == get the keys of char, bg, eye, mouth
+    if(init){
+        id_eye = 0;
+        id_mouth = 0;
+    }else if(!load_from_gallery){
+        bg_key = localStorage.getItem("bg_key");
+        char_key = localStorage.getItem("char_key");
+        id_eye = localStorage.getItem("id_eye");
+        id_mouth = localStorage.getItem("id_mouth");
+    }else{
+        bg_key = comic_config[current_mini_canvas-1]["bg_key"]
+        char_key = comic_config[current_mini_canvas-1]["char_key"];
+        id_eye = comic_config[current_mini_canvas-1]["id_eye"];
+        id_mouth = comic_config[current_mini_canvas-1]["id_mouth"];
+    }
+
+
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
+    }
+    var parts_folder = folder + 'figure_parts/';
+    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
+    char.src = folder + config['characters'][char_key]['figure']['filename'];
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+    if(add_text){
+        if(!load_from_gallery){
+            global_text= document.getElementById('area1').value;
+        }else{
+            global_text= comic_config[current_mini_canvas-1]["text"];
+        }
+        
+        //Remove all the new lines.
+        global_text = global_text.replace(/\n\s*\n/g, ' ');
+        //remove multiple white space
+        global_text = global_text.replace(/\s+/g, " ");
+        global_text = global_text.trim();
+
+        n_char = global_text.length;
+        if(n_char>0 & n_char<20){
+            bubble_key='small';
+        }else if (n_char<102){
+            bubble_key='medium';
+        }else if (n_char<175){
+            bubble_key='large';
+        }else{
+            bubble_key='long';
+        }
+        // bubble_key = bubble_keys[bubble_id];
+        var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
+        dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
+        dialog.onload =img_onload;
+
+
+
+    }
+
+    // ======= Onload functions
+    function img_onload(){
+        imagesLoaded++;
+        if(global_text==""){
+            if(imagesLoaded == 4){
+                draw_character("canvas" ,bg, char,eye,mouth, char_key );
+            }
+        }else{
+            if(imagesLoaded == 5)
+            draw_character("canvas" ,bg, char,eye,mouth, char_key , global_text , dialog ,bubble_key);
+        }
+
+    };
+
+}
 
 function draw_character(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog ,bubble_key){
     console.log("==== Drawing Comic ====");
@@ -736,55 +688,7 @@ function draw_gallery(canvas_id ,bg, char,eye,mouth, char_key , text='' , dialog
 
     //Draw and dialog text
     if(text !=''){
-        font = 32;
-        console.log("Use speech bubble:" +bubble_key );
-        var bubble_x_offset= config['speech_bubbles'][bubble_key]['x_offset_background'];
-        var bubble_y_offset= config['speech_bubbles'][bubble_key]['y_offset_background'];
-    
-        var bubble_width = config['speech_bubbles'][bubble_key]['width'];
-        var bubble_height = config['speech_bubbles'][bubble_key]['height'];
-        context.drawImage(dialog, bubble_x_offset, bubble_y_offset, width = bubble_width, height = bubble_height);
-        
-
-
-        // bubble_type='medium';
-        if(bubble_key=='large'){
-            n_char_per_line = 25;
-        }else if(bubble_key=='medium'){
-            n_char_per_line = 17;
-        }else if(bubble_key=='long'){
-            n_char_per_line = 60;
-        }else if(bubble_key=='small'){
-            n_char_per_line = 10;
-        }
-
-        
-        text_array =  foldRgx(text, n_char_per_line);
-        // new_text = text_array.join('\n');
-
-        console.log("displaying text with font size: " + font)
-        console.log("Characters per line: " + n_char_per_line)
-        console.log("Lines: " + text_array.length)
-
-        // x_dia = x_char 
-        // y_dia = y_char 
-
-        x_text = bubble_x_offset + config['speech_bubbles'][bubble_key]['x_offset_text'];
-        y_text = bubble_y_offset + config['speech_bubbles'][bubble_key]['y_offset_text'];
-        
-        // dia_width =  font * 0.5  * n_char_per_line;
-        // dia_height=40* (text_array.length-1);
-        // context.drawImage(dialog, x_dia, y_dia, dw =dia_width, dh =dia_height);
-        // context.lineWidth = 1;
-        // context.fillStyle = "#CC00FF";
-        // context.lineStyle = "#ffff00";
-        
-        context.font = font+"px sans-serif";
-
-        lineheight=font+ 1;
-        for (var i = 0; i<text_array.length; i++){
-            context.fillText(text_array[i], x_text, y_text+ font + (i*lineheight) );
-        }
+        draw_dialog(context, dialog, text, bubble_key)
     }
 }
 
@@ -811,6 +715,8 @@ function draw_dialog(context, dialog, text, bubble_key){
         n_char_per_line = 10;
     }
 
+
+    fold_text_to_lines(text,n_char_per_line)
     
     text_array =  foldRgx(text, n_char_per_line);
     // new_text = text_array.join('\n');
@@ -846,7 +752,10 @@ function add_dialog() {
     global_text= document.getElementById('area1').value
     
     //Remove all the new lines.
-    global_text = global_text.replace(/\n\s*\n/g, '');
+    global_text = global_text.replace(/\n\s*\n/g, ' ');
+    //remove multiple white space
+    global_text = global_text.replace(/\s+/g, " ");
+    global_text = global_text.trim();
 
     n_char = global_text.length;
     if(n_char>0 & n_char<20){
@@ -928,6 +837,14 @@ function foldRgx(s, n) {
 }
 
 
+function fold_text_to_lines(text, n) {
+    text_array = text.split(" ")
+
+
+    var rgx = new RegExp('.{0,' + n + '}', 'g');
+    return s.match(rgx);
+}
+
 function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
 
     var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
@@ -993,3 +910,166 @@ function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
 
 //     targetelement.appendChild(img);
 // };
+
+
+
+//Function used to draw the comic from comics in the gallery.
+function redraw_from_gallery(){
+    // ======= Get the char, bg, eye, mouth info from the gallery
+    imagesLoaded = 0;
+    bg.onload = img_onload;
+    char.onload = img_onload;
+    eye.onload = img_onload;
+    mouth.onload = img_onload;
+    
+    bg_key = comic_config[current_mini_canvas-1]["bg_key"]
+    char_key = comic_config[current_mini_canvas-1]["char_key"];
+    id_eye = comic_config[current_mini_canvas-1]["id_eye"];
+    id_mouth = comic_config[current_mini_canvas-1]["id_mouth"];
+
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
+    }
+    var parts_folder = folder + 'figure_parts/';
+    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
+    char.src = folder + config['characters'][char_key]['figure']['filename'];
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+
+
+    // ======= Get the text from gallery and set the corresponding dialogue bubble.
+    global_text = comic_config[current_mini_canvas-1]["text"]
+    n_char = global_text.length;
+    if(n_char>0 & n_char<20){
+        bubble_key='small';
+    }else if (n_char<102){
+        bubble_key='medium';
+    }else if (n_char<175){
+        bubble_key='large';
+    }else{
+        bubble_key='long';
+    }
+
+    // bubble_key = bubble_keys[bubble_id];
+    var bubble_folder = config['folder'] + config['speech_bubbles']['subfolder'];
+    dialog.src = bubble_folder + config['speech_bubbles'][bubble_key]['filename'];
+
+
+    dialog.onload =img_onload;
+
+    // Img onload function when bg, char, eye, mouth, dialog (5 images) are all loaded
+    function img_onload(){
+        imagesLoaded++;
+        if(imagesLoaded == 5){
+            draw_character("canvas" ,bg, char,eye,mouth, char_key,  global_text,
+            dialog ,bubble_key );
+        }
+    };
+}
+
+
+
+function init_comic(){
+
+    
+    bg.onload = img_onload;
+    char.onload = img_onload;
+    eye.onload = img_onload;
+    mouth.onload = img_onload;
+    
+    // dialog.onload = img_onload;
+    imagesLoaded = 0;
+    function img_onload(){
+        imagesLoaded++;
+        if(imagesLoaded == 4){
+            draw_character("canvas" ,bg, char,eye,mouth, char_key );
+
+        }
+    };
+
+
+    //init the comic, so choose a default 
+    id_eye = 0;
+    id_mouth = 0;
+
+    
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
+
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
+    }
+    var parts_folder = folder + 'figure_parts/';
+
+    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
+    char.src = folder + config['characters'][char_key]['figure']['filename'];
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+    // clean the text area
+    clean_textarea();
+}
+
+
+
+function add_bg_char_to_canvas(){
+    // Draw Image function
+    imagesLoaded = 0;
+    bg.onload = img_onload;
+
+    char.onload = img_onload;
+
+    eye.onload = img_onload;
+
+    mouth.onload = img_onload;
+    
+    // dialog.onload = img_onload;
+
+    function img_onload(){
+        imagesLoaded++;
+        if(imagesLoaded == 4){
+            draw_character("canvas" ,bg, char,eye,mouth, char_key );
+        }
+    };
+
+    bg_key = localStorage.getItem("bg_key");
+    char_key = localStorage.getItem("char_key");
+    id_eye = localStorage.getItem("id_eye");
+    id_mouth = localStorage.getItem("id_mouth");
+
+    
+
+
+    var root_folder = config['folder'];
+    var subfolder = config['characters'][char_key]['subfolder']
+    var bg_folder = root_folder +  config['backgrounds'][bg_key]['subfolder'];
+
+    if(subfolder == "None"){
+        var folder  =root_folder;
+    }else{
+        var folder  =root_folder + subfolder;
+    }
+
+    var parts_folder = folder + 'figure_parts/';
+
+    bg.src = bg_folder + config['backgrounds'][bg_key]['filename'];
+    char.src = folder + config['characters'][char_key]['figure']['filename'];
+
+    //older version using 'filename'
+    // eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['filename']; 
+    // mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['filename'];
+
+    eye.src= parts_folder + config['characters'][char_key]['eyes'][id_eye]['figure_filename']; 
+    mouth.src= parts_folder + config['characters'][char_key]['mouth'][id_mouth]['figure_filename'];
+
+    // window.addEventListener('resize', draw_canvas, false);
+}
