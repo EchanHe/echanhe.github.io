@@ -750,6 +750,53 @@ function draw_dialog(context, dialog, text, bubble_key){
 
 }
 
+function build_structure_string(structure_array){
+    var comic_structure = ""
+    for(const ele of structure_array){
+        comic_structure+= ele.getAttribute('src')+",";
+    }
+    return comic_structure;
+}
+
+async function get_recommendation(text,structure){
+    let url = "http://128.199.57.220/comic"
+    // let url = "http://127.0.0.1:5000/comic";
+    const response = await fetch(url,{
+        method:"POST",
+        // mode:"no-cors",
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            comic_name: "test",
+            comic_structure: structure,
+            comic_script: text
+        })
+    });
+    return response.json();
+}
+
+function show_recommendation(data){
+    var panel = document.getElementById('recommend_panel');
+    panel.textContent = '';
+    var h4 = document.createElement('h4');
+    h4.innerHTML = "Suggest reading:";
+    var ul = document.createElement('ul');
+    ul.setAttribute('id','recom_list');
+    panel.appendChild(h4);
+    panel.appendChild(ul);
+    data.forEach(renderSuggest);
+    function renderSuggest(element,index,arr){
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.setAttribute('href',element['href']);
+        a.setAttribute('target','_blank');
+        a.innerHTML = element['name'];
+        li.appendChild(a);
+        ul.appendChild(li);
+    }
+}
 
 function add_dialog() {
     // Draw Image function
@@ -760,7 +807,11 @@ function add_dialog() {
     //remove multiple white space
     global_text = global_text.replace(/\s+/g, " ");
     global_text = global_text.trim();
-
+    const structure = build_structure_string([bg,char,eye,mouth]);
+    get_recommendation(global_text,structure).then((data)=>{
+        show_recommendation(data);
+        console.log(data);
+    });
     n_char = global_text.length;
     if(n_char>0 & n_char<20){
         bubble_key='small';

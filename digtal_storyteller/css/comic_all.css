@@ -825,6 +825,13 @@ opacity: 50%;
       /* border: 3px solid #18e7e7; */
     }
 
+    .recommend_panel{
+      margin-left: 15px;
+    }
+    .recommend_panel a{
+      text-decoration: underline;
+      font-size: larger;
+    }
 
  /* -- Yichen CSS End -- */
 
