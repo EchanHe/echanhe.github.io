@@ -759,7 +759,7 @@ function build_structure_string(structure_array){
 }
 
 async function get_recommendation(text,structure){
-    let url = "http://128.199.57.220/comic"
+    let url = "http://128.199.57.220/api/comic"
     // let url = "http://127.0.0.1:5000/comic";
     const response = await fetch(url,{
         method:"POST",
@@ -952,10 +952,17 @@ function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
     if(global_text ==''){
         alert("Only comic with dialog can be downloaded");
     }else{
-        alert("Please right-click on the comic, and select \"Save image as ...\" to save the image.");
-        // var canvas = document.getElementById("canvas");
-        // var img    = canvas.toDataURL("image/png");
+        var canvas = document.getElementById("canvas");
+        var img    = canvas.toDataURL("image/png");
         // document.write('<img src="'+img+'" crossorigin="anonymous"/ >');
+        img = img.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+        img = img.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Comic.png');
+        const a = document.createElement('a');
+        a.href = img;
+        a.download = "comic.png";
+        document.body.appendChild(a);
+        a.click()
+        document.body.removeChild(a);
     }
     
 
