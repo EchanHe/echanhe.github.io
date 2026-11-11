@@ -14,7 +14,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://echanhe.github.io/">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
+<!-- Favicon: YHE monogram as a data URI, no file needed. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230284c7'/><text x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='600' fill='%23ffffff' text-anchor='middle'>YHE</text></svg>">
 
 <style>
 /* ============================================================
@@ -27,8 +28,8 @@
   --text:       #0f1c26;
   --text-soft:  #48596a;
   --text-faint: #657886;
-  --accent:     #0369a1;
-  --accent-bg:  #e2f1fb;
+  --accent:     #0574ad;
+  --accent-bg:  #e0f2fe;
   --tag-bg:     #edf3f9;
 
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
@@ -46,7 +47,7 @@
     --text:       #e7eef5;
     --text-soft:  #a7b8c6;
     --text-faint: #7a8c9a;
-    --accent:     #6fc5f0;
+    --accent:     #7dd3fc;
     --accent-bg:  #102a3c;
     --tag-bg:     #1d2832;
   }
@@ -58,7 +59,7 @@
   --text:       #e7eef5;
   --text-soft:  #a7b8c6;
   --text-faint: #7a8c9a;
-  --accent:     #6fc5f0;
+  --accent:     #7dd3fc;
   --accent-bg:  #102a3c;
   --tag-bg:     #1d2832;
 }
@@ -93,7 +94,7 @@ header { padding: 56px 0 28px; }
   flex: 0 0 96px; width: 96px; height: 96px; border-radius: 50%;
   background: var(--accent-bg); color: var(--accent);
   display: grid; place-items: center;
-  font-family: var(--font-serif); font-size: 32px; letter-spacing: 0.02em;
+  font-family: var(--font-serif); font-size: 27px; letter-spacing: 0.02em;
   border: 1px solid var(--border); overflow: hidden;
 }
 /* The portrait is images/photo.jpg; if that file is missing the page falls
@@ -303,7 +304,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
       <!-- Put a square photo at images/photo.jpg. If the file is absent the
            initials circle is shown instead — nothing breaks either way. -->
       <img class="portrait" src="images/photo.jpg" alt="Yichen He"
-           onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'portrait',textContent:'YH'}))">
+           onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'portrait',textContent:'YHE'}))">
       <div>
         <h1>Yichen He</h1>
         <p class="role">Postdoctoral Scholar · AI for biological imaging</p>
@@ -656,9 +657,9 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
   <div class="cv-row"><div><strong>Software Developer</strong><span>Ubiquitous Technology Ltd, Guangzhou, China — 3D building models in VR and web (Unity, C#, Three.js)</span></div><div class="cv-when">2015 – 2016</div></div>
 
   <h3>Education</h3>
-  <div class="cv-row"><div><strong>PhD, Animal and Plant Sciences</strong><span>University of Sheffield, UK · Leverhulme Trust PhD Scholarship</span></div><div class="cv-when">2016 – 2021</div></div>
-  <div class="cv-row"><div><strong>MSc, Advanced Computer Science</strong><span>University of Sheffield, UK · Distinction</span></div><div class="cv-when">2014 – 2015</div></div>
-  <div class="cv-row"><div><strong>BEng, Software Engineering</strong><span>South China University of Technology, China · top 1% of cohort</span></div><div class="cv-when">2010 – 2014</div></div>
+  <div class="cv-row"><div><strong>PhD, Animal and Plant Sciences</strong><span>University of Sheffield, UK</span></div><div class="cv-when">2016 – 2021</div></div>
+  <div class="cv-row"><div><strong>MSc, Advanced Computer Science</strong><span>University of Sheffield, UK</span></div><div class="cv-when">2014 – 2015</div></div>
+  <div class="cv-row"><div><strong>BEng, Software Engineering</strong><span>South China University of Technology, China</span></div><div class="cv-when">2010 – 2014</div></div>
 
   <h3>Grants</h3>
   <div class="cv-row"><div><strong>JSPS KAKENHI Grant-in-Aid for Research Activity Start-up</strong><span>Principal Investigator · 26K25578 · JPY 2,100,000 · two-year award</span></div><div class="cv-when">2026</div></div>
