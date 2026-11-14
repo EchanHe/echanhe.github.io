@@ -22,7 +22,7 @@
    1. DESIGN TOKENS — change colours/fonts here, nowhere else
    ============================================================ */
 :root {
-  /* Palette: "coral reef". --pop is decoration only (the dot after the name) —
+  /* Palette: "coral reef". --pop is decoration only (the short rule under the name) —
      never text, buttons or links. */
   --bg:         #f8f7f3;
   --surface:    #ffffff;
@@ -106,9 +106,9 @@ header { padding: 56px 0 28px; }
    back to the initials circle automatically (see the <img> in the header). */
 img.portrait { object-fit: cover; }
 h1 { font-size: 40px; margin: 0 0 6px; line-height: 1.1; }
-/* The one --pop accent on the page: a coral dot after the name. Decorative only. */
-h1::after { content: ""; display: inline-block; width: 0.17em; height: 0.17em;
-            margin-left: 0.08em; border-radius: 50%; background: var(--pop); }
+/* The one --pop accent on the page: a short coral rule under the name. Decorative only. */
+h1::after { content: ""; display: block; width: 36px; height: 3px; border-radius: 2px;
+            background: var(--pop); margin: 10px 0 12px; }
 .role { color: var(--text-soft); margin: 0 0 4px; font-size: 16.5px; }
 .affil { color: var(--text-faint); margin: 0; font-size: 15px; }
 
