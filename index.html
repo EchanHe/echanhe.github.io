@@ -15,22 +15,25 @@
 <meta property="og:url" content="https://echanhe.github.io/">
 
 <!-- Favicon: YHE monogram as a data URI, no file needed. -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230284c7'/><text x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='600' fill='%23ffffff' text-anchor='middle'>YHE</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a6f8f'/><text x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='600' fill='%23ffffff' text-anchor='middle'>YHE</text></svg>">
 
 <style>
 /* ============================================================
    1. DESIGN TOKENS — change colours/fonts here, nowhere else
    ============================================================ */
 :root {
-  --bg:         #f6f9fc;
+  /* Palette: "coral reef". --pop is decoration only (the dot after the name) —
+     never text, buttons or links. */
+  --bg:         #f8f7f3;
   --surface:    #ffffff;
-  --border:     #dde7f0;
-  --text:       #0f1c26;
-  --text-soft:  #48596a;
-  --text-faint: #657886;
-  --accent:     #0574ad;
-  --accent-bg:  #e0f2fe;
-  --tag-bg:     #edf3f9;
+  --border:     #e3e0d6;
+  --text:       #102530;
+  --text-soft:  #4d5f67;
+  --text-faint: #5f7077;   /* audit value #63747b gave 4.35:1 on --tag-bg (chips) */
+  --accent:     #0a6f8f;
+  --accent-bg:  #e4f3f7;
+  --tag-bg:     #eef3f3;
+  --pop:        #f26b5b;
 
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --font-sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -41,27 +44,29 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:         #0e151d;
-    --surface:    #16202b;
-    --border:     #26333f;
-    --text:       #e7eef5;
-    --text-soft:  #a7b8c6;
-    --text-faint: #7a8c9a;
-    --accent:     #7dd3fc;
-    --accent-bg:  #102a3c;
-    --tag-bg:     #1d2832;
+    --bg:         #0a1a22;
+    --surface:    #10252e;
+    --border:     #1e3943;
+    --text:       #e8f0f2;
+    --text-soft:  #a2b7bd;
+    --text-faint: #83999f;   /* audit value #7f959c gave 4.41:1 on --tag-bg */
+    --accent:     #74d0e6;
+    --accent-bg:  #12343f;
+    --tag-bg:     #15303a;
+    --pop:        #ff8577;
   }
 }
 :root[data-theme="dark"] {
-  --bg:         #0e151d;
-  --surface:    #16202b;
-  --border:     #26333f;
-  --text:       #e7eef5;
-  --text-soft:  #a7b8c6;
-  --text-faint: #7a8c9a;
-  --accent:     #7dd3fc;
-  --accent-bg:  #102a3c;
-  --tag-bg:     #1d2832;
+  --bg:         #0a1a22;
+  --surface:    #10252e;
+  --border:     #1e3943;
+  --text:       #e8f0f2;
+  --text-soft:  #a2b7bd;
+  --text-faint: #83999f;
+  --accent:     #74d0e6;
+  --accent-bg:  #12343f;
+  --tag-bg:     #15303a;
+  --pop:        #ff8577;
 }
 
 /* ============================================================
@@ -101,6 +106,9 @@ header { padding: 56px 0 28px; }
    back to the initials circle automatically (see the <img> in the header). */
 img.portrait { object-fit: cover; }
 h1 { font-size: 40px; margin: 0 0 6px; line-height: 1.1; }
+/* The one --pop accent on the page: a coral dot after the name. Decorative only. */
+h1::after { content: ""; display: inline-block; width: 0.17em; height: 0.17em;
+            margin-left: 0.08em; border-radius: 50%; background: var(--pop); }
 .role { color: var(--text-soft); margin: 0 0 4px; font-size: 16.5px; }
 .affil { color: var(--text-faint); margin: 0; font-size: 15px; }
 
@@ -149,21 +157,6 @@ h3 { font-size: 17px; margin: 32px 0 12px; font-family: var(--font-sans);
      text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); font-weight: 600; }
 .lead { font-size: 19.5px; line-height: 1.55; color: var(--text); margin: 0 0 22px; }
 
-/* ============================================================
-   5. AT A GLANCE
-   ============================================================ */
-.glance {
-  border: 1px solid var(--border); border-radius: var(--radius);
-  background: var(--surface); padding: 6px 20px; margin: 30px 0;
-}
-.glance dl { display: grid; grid-template-columns: 134px 1fr; gap: 0; margin: 0; }
-.glance dt {
-  font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--text-faint); padding: 12px 18px 0 0; font-weight: 600;
-}
-.glance dd { margin: 0; padding: 11px 0; font-size: 15.5px; color: var(--text-soft); }
-.glance dd + dt, .glance dd:not(:last-child) { border-top: 1px solid var(--border); }
-.glance dt:first-of-type, .glance dt:first-of-type + dd { border-top: 0; }
 
 /* ============================================================
    6. PUBLICATIONS
@@ -276,19 +269,17 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
   .pub, .pub:has(.thumb) { grid-template-columns: 1fr; gap: 6px; }
   .thumb { width: 100%; max-width: 260px; }
   .pub-year { padding-top: 0; }
-  .glance dl { grid-template-columns: 1fr; gap: 0; }
-  .glance dt { padding-bottom: 0; }
-  .glance dd { padding-top: 2px; }
-  .glance dd:not(:last-child) { border-top: 0; }
-  .glance dd + dt { border-top: 1px solid var(--border); margin-top: 10px; }
   .cv-row { grid-template-columns: 1fr; gap: 2px; }
   .cv-when { text-align: left; }
+  /* keep all four tabs, including CV, on screen at phone width */
+  .tabbar-inner { padding: 0 10px; gap: 0; }
+  .tab { padding: 14px 9px 12px; font-size: 14.5px; }
 }
 @media print {
   .tabbar, .theme-toggle, .links { display: none; }
   .js .panel[hidden-tab] { display: block; }
   body { font-size: 11pt; background: #fff; color: #000; }
-  .card, .glance { break-inside: avoid; }
+  .card { break-inside: avoid; }
 }
 </style>
 </head>
@@ -323,9 +314,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
       <a href="https://github.com/EchanHe">GitHub</a>
       <a href="https://orcid.org/0000-0003-3464-7526">ORCID</a>
       <a href="https://scholar.google.com/citations?user=jkHYYV4AAAAJ&amp;hl=en">Google Scholar</a>
-      <!-- TODO: paste your LinkedIn URL and un-comment
-      <a href="https://www.linkedin.com/in/XXXXXXX">LinkedIn</a>
-      -->
+      <a href="https://www.linkedin.com/in/yichen-he/">LinkedIn</a>
     </nav>
   </div>
 </header>
@@ -349,9 +338,9 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
      ============================================================ -->
 <section class="panel" id="about" role="tabpanel" aria-labelledby="tab-about">
 
+  <!-- About text is kept in sync with work-os/Profile/bio.md ("Homepage About"). -->
   <p class="lead">I build AI methods and open-source tools that turn images of biological specimens
-  into measurements — from plumage colour in museum bird photographs to multi-part anatomy in
-  micro-CT scans of ants.</p>
+  into measurements, and I test when those measurements are reliable enough to use.</p>
 
   <!-- Drop any of these three files into images/ and the strip appears;
        leave them out and the whole strip disappears silently. -->
@@ -363,40 +352,23 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     foraminifera, both from micro-CT. The shared problem is fine-grained parts, not foreground.</figcaption>
   </figure>
 
-  <div class="glance">
-    <dl>
-      <dt>Now</dt>
-      <dd>Postdoctoral scholar, Biodiversity and Biocomplexity Unit, OIST (since 2025)</dd>
+  <p>I trained in software engineering and computer science and worked as a software developer before
+  my PhD with Gavin Thomas and Steve Maddock at the University of Sheffield. I then worked with Anjali
+  Goswami at the Natural History Museum, London, and joined Evan Economo's lab at OIST in 2025.</p>
 
-      <dt>Work on</dt>
-      <dd>Annotation-efficient 2D/3D segmentation · vision foundation models on collection data</dd>
+  <p>During my PhD I segmented 146,652 museum photographs of birds to study how UV reflectance evolved
+  across 4,545 passerine species (<a href="#publications"><em>Nature Communications</em>, 2022</a>).
+  At the Natural History Museum I built <a href="#software">SPROUT</a>, a training-free toolkit that
+  segments micro-CT scans into anatomical parts (accepted at <a href="#publications"><em>Nature
+  Communications</em></a>). I also built <a href="#software">PlumageParts</a>, a dataset and benchmark
+  of 4,705 bird images labelled into nine plumage regions.</p>
 
-      <dt>Tools</dt>
-      <dd><a href="#software">SPROUT</a> · <a href="#software">PhenoLearn</a> · <a href="#software">PlumageParts</a></dd>
-
-      <dt>Funding</dt>
-      <dd>JSPS KAKENHI Start-up, PI (26K25578, 2026–2028)</dd>
-
-      <dt>Before</dt>
-      <dd>Natural History Museum London · PhD, Sheffield · software engineering background</dd>
-    </dl>
-  </div>
-
-  <p>A specimen can be photographed or scanned in seconds, and it still takes a trained person hours
-  to turn that image into a number that means something biologically. I close that gap with methods
-  that work under collection conditions — few labels, a different body plan in every taxon — and I
-  ship them as software other people can run.</p>
-
-  <p>The point is what the measurements then support. Segmenting 146,652 specimen photographs made it
-  possible to show how UV reflectance is distributed across 4,545 passerine species and what predicts
-  it (<a href="#publications"><em>Nature Communications</em>, 2022</a>), and to map global gradients in
-  plumage colourfulness (<a href="#publications"><em>Nature Ecology &amp; Evolution</em>, 2022</a>).
-  The same pipeline on micro-CT is what the ant benchmark is being built for.</p>
+  <p>At OIST I am building a multi-part segmentation benchmark from Antscan's 2,193 ant micro-CT scans,
+  funded by a JSPS KAKENHI grant on which I am PI. The question I care about is whether an automated
+  measurement can be trusted for a given trait, not only whether a model is accurate on average.</p>
 
   <h3>Currently</h3>
   <ul class="plain">
-    <li>Building the first cross-species, multi-part segmentation benchmark on 2,193 ant micro-CT
-    scans, as PI of a JSPS KAKENHI grant.</li>
     <li>Testing where vision foundation models break on natural history collection data.</li>
     <li>Maintaining <a href="#software">SPROUT</a> and <a href="#software">PhenoLearn</a> for users
     outside my own projects.</li>
@@ -404,10 +376,9 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
 
   <h3>Recent</h3>
   <ul class="plain dated">
-    <li><span class="when">2026-12</span><span class="what">Co-organising the Personalized Visual Intelligence workshop at ACCV.</span></li>
-    <li><span class="when">2026-10</span><span class="what">SPROUT accepted in principle at <em>Nature Communications</em>.</span></li>
-    <li><span class="when">2026-09</span><span class="what"><a href="#publications">PlumageParts</a> preprint posted.</span></li>
+    <li><span class="when">2026-11</span><span class="what">SPROUT accepted at <em>Nature Communications</em>.</span></li>
     <li><span class="when">2026-08</span><span class="what">JSPS KAKENHI Research Activity Start-up awarded (PI).</span></li>
+    <li><span class="when">2026-07</span><span class="what"><a href="#publications">PlumageParts</a> preprint posted.</span></li>
   </ul>
 
 </section>
@@ -430,11 +401,10 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     <div>
       <p class="pub-title">PlumageParts: a fine-grained avian plumage segmentation dataset and benchmark for ecological image analysis<span class="flag">under review</span></p>
       <p class="pub-authors"><b>He, Y.*</b>, Ioannou, E., Harris, K., Thomas, G.H., Maddock, S., Renoult, J.P., &amp; Cooney, C.R.</p>
-      <p class="pub-venue"><em>bioRxiv</em> · under consideration at <em>PLOS Computational Biology</em></p>
+      <p class="pub-venue"><em>bioRxiv</em> · under consideration at <em>Scientific Data</em></p>
       <div class="pub-links">
-        <a href="https://doi.org/10.1101/2026.07.30.741737">Preprint</a>
-        <!-- TODO: add the code/dataset link once the repo is public
-        <a href="https://github.com/EchanHe/PlumageParts">Code &amp; data</a> -->
+        <a href="https://doi.org/10.64898/2026.07.30.741737">Preprint</a>
+        <a href="https://github.com/EchanHe/PlumageParts">Code &amp; data</a>
       </div>
     </div>
   </article>
@@ -446,7 +416,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
       <p class="pub-authors">MacDonald, R.X., Harris, K., <b>He, Y.</b>, Hughes, E.C., Ioannou, E., James, T.D., Jardine, M.D., Moody, C.J.A., Nouri, L.O., Varley, Z.K., Thomas, G.H., &amp; Cooney, C.R.</p>
       <p class="pub-venue"><em>bioRxiv</em> · under review at <em>Nature Ecology &amp; Evolution</em></p>
       <div class="pub-links">
-        <a href="https://doi.org/10.1101/2026.06.22.733718">Preprint</a>
+        <a href="https://doi.org/10.64898/2026.06.22.733718">Preprint</a>
       </div>
     </div>
   </article>
@@ -455,9 +425,9 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     <div class="pub-year">2025</div>
     <img class="thumb" src="images/pub-sprout.jpg" alt="Multi-structure segmentation of CT scans" onerror="this.remove()">
     <div>
-      <p class="pub-title">SPROUT: a user-friendly, scalable toolkit for multi-class segmentation of volumetric images<span class="flag">accepted in principle</span></p>
+      <p class="pub-title">SPROUT: a user-friendly, scalable toolkit for multi-class segmentation of volumetric images<span class="flag">accepted</span></p>
       <p class="pub-authors"><b>He, Y.*</b>, Camaiti, M., Roberts, L.E., Mulqueeney, J.M., Ioannou, E., Didziokas, M., &amp; Goswami, A.</p>
-      <p class="pub-venue"><em>Nature Communications</em>, accepted in principle (2026) · preprint on <em>bioRxiv</em></p>
+      <p class="pub-venue"><em>Nature Communications</em>, accepted (2026) · preprint on <em>bioRxiv</em></p>
       <div class="pub-links">
         <a href="https://doi.org/10.1101/2024.11.22.624847">Preprint</a>
         <a href="https://github.com/EchanHe/SPROUT">Code</a>
@@ -549,7 +519,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     <div class="pub-year">2022</div>
     <div>
       <p class="pub-title">SpheroidAnalyseR: an online platform for analysing data from 3D spheroids or organoids grown in 96-well plates</p>
-      <p class="pub-authors">Barrow, R., Wilkinson, J.N., <b>He, Y.</b><sup>†</sup>, Callaghan, M., Brüning-Richardson, A., Dunning, M., &amp; Stead, L.F.</p>
+      <p class="pub-authors">Barrow, R.<sup>†</sup>, Wilkinson, J.N.<sup>†</sup>, <b>He, Y.</b><sup>†</sup>, Callaghan, M., Brüning-Richardson, A., Dunning, M., &amp; Stead, L.F.</p>
       <p class="pub-venue"><em>Journal of Biological Methods</em> 9(4), e163</p>
       <div class="pub-links">
         <a href="https://doi.org/10.14440/jbm.2022.388">DOI</a>
@@ -566,8 +536,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
 <section class="panel" id="software" role="tabpanel" aria-labelledby="tab-software" hidden-tab>
 
   <h2>Software &amp; Data</h2>
-  <p>Every project I run is meant to leave behind a tool or a dataset that stands on its own.
-  These are the ones people outside the original project use.</p>
+  <p>Every project I run is meant to leave behind a tool or a dataset that stands on its own.</p>
 
   <div class="cards">
 
@@ -579,7 +548,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
       training data, so a new dataset does not need a fresh round of manual annotation.</p>
       <p class="evidence">Used at collection scale: 1,000+ foraminifera, 100+ canine CT scans,
       100+ mammalian skulls. napari plugin and command-line workflows, with Avizo and ImageJ interfaces.</p>
-      <p class="evidence">Paper accepted in principle at <em>Nature Communications</em> (2026).</p>
+      <p class="evidence">Paper accepted at <em>Nature Communications</em> (2026).</p>
       <div class="chips"><span class="chip">Python</span><span class="chip">napari</span><span class="chip">NumPy/SciPy</span><span class="chip">CLI + GUI</span></div>
       <div class="pub-links">
         <a href="https://github.com/EchanHe/SPROUT">GitHub</a>
@@ -597,8 +566,8 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
       over without retraining to independent bird benchmarks (PartImageNet bird subset, CUB-200-2011).</p>
       <div class="chips"><span class="chip">PyTorch</span><span class="chip">DINOv3</span><span class="chip">segmentation</span><span class="chip">video</span></div>
       <div class="pub-links">
-        <a href="https://doi.org/10.1101/2026.07.30.741737">Preprint</a>
-        <!-- TODO: add GitHub / Zenodo links when public -->
+        <a href="https://github.com/EchanHe/PlumageParts">GitHub</a>
+        <a href="https://doi.org/10.64898/2026.07.30.741737">Preprint</a>
       </div>
     </div>
 
@@ -620,7 +589,7 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     <div class="card">
       <img class="shot" src="images/antbenchmark.png" alt="Multi-part segmentation of an ant micro-CT scan" onerror="this.remove()">
       <div class="card-head"><h4>Ant multi-part benchmark</h4><span class="kind">In progress</span></div>
-      <p>First cross-species, multi-part segmentation benchmark built on Antscan, the published
+      <p>Cross-species, multi-part segmentation benchmark built on Antscan, the published
       archive of 2,193 synchrotron micro-CT scans across 792 ant species, whose released
       segmentations separate only specimen from background.</p>
       <p class="evidence">Funded by a JSPS KAKENHI Research Activity Start-up grant (26K25578),
@@ -631,8 +600,8 @@ footer p { font-size: 14px; color: var(--text-faint); margin: 0 0 6px; }
     <div class="card">
       <img class="shot" src="images/spheroidanalyser.png" alt="The SpheroidAnalyseR interface" onerror="this.remove()">
       <div class="card-head"><h4>SpheroidAnalyseR</h4><span class="kind">Tool</span></div>
-      <p>R Shiny platform for high-throughput analysis of 3D spheroid and organoid imaging data
-      grown in 96-well plates.</p>
+      <p>R Shiny platform for high-throughput analysis of imaging data from 3D spheroids and
+      organoids grown in 96-well plates.</p>
       <div class="chips"><span class="chip">R</span><span class="chip">Shiny</span></div>
       <div class="pub-links">
         <a href="https://doi.org/10.14440/jbm.2022.388">Paper</a>
